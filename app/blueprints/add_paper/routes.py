@@ -21,6 +21,10 @@ def add_paper():
         if 'extract' in request.form:
             doi = request.form['doi']
             paper_info = extract_paper_info(doi)
+            if paper_info is None:
+                flash(f"Information couldn't retrieved automatically. Please, fill it out.", category='info')
+                paper_info = {}
+            paper_info['doi'] = doi
             return render_template('add_paper/index.html', data=paper_info)
         elif 'add' in request.form:
             doi = request.form['doi']
@@ -38,7 +42,6 @@ def add_paper():
             countries_names = countries.split(',') if countries else []
             countries = []
             for country in countries_names:
-                print(f'Country: {country}')
                 country_code = get_country_code(country).lower()
                 c = Country(name=country, code=country_code).save()
                 countries.append(c)
@@ -49,8 +52,17 @@ def add_paper():
                     filename = secure_filename(certificate_file.filename)
                     certificate_file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
                 else:
-                    flash(f'Invalid file extension for certificate. Please use: {ALLOWED_EXTENSIONS}')
-                    return redirect(request.url)
+                    flash(f'Invalid file extension for certificate. Please, use one of these: {", ".join(ALLOWED_EXTENSIONS)}', category='error')
+                    paper_info = {}
+                    paper_info['doi'] = request.form['doi']
+                    paper_info['title'] = request.form['title']
+                    paper_info['year'] = request.form['year']
+                    paper_info['venue'] = request.form['venue']
+                    paper_info['authors'] = request.form['authors']
+                    paper_info['affiliations'] = request.form['affiliations']
+                    paper_info['countries'] = request.form['countries']
+                    paper_info['award'] = request.form['award']
+                    return render_template('add_paper/index.html', data=paper_info)
             
             print(f'Filename: {filename}')
             paper = Paper(doi=doi,
@@ -71,14 +83,15 @@ def add_paper():
 
 
 def extract_paper_info(doi: str) -> dict[str, str]:
-    title, authors, year, venue = get_paper_info(doi)
-    paper_info = {}
-    paper_info['doi'] = doi
-    paper_info['title'] = title
-    paper_info['year'] = year
-    paper_info['venue'] = venue
-    paper_info['authors'] = ', '.join([f'{a.get("given")} {a.get("family")}' for a in authors])
-    paper_info['affiliations'] = ', '.join({f'{af.get("name").split(",", 1)[0]}' for a in authors for af in a.get("affiliation")})
-    paper_info['countries'] = ', '.join({f'{af.get("name").split(",")[-1].strip()}' for a in authors for af in a.get("affiliation")})
-    print(f'Paper info: {paper_info["countries"]}')
+    paper_info = None
+    info = get_paper_info(doi)  # Extract paper info automatically
+    if info is not None:
+        title, authors, year, venue = info
+        paper_info = {}
+        paper_info['title'] = title
+        paper_info['year'] = year
+        paper_info['venue'] = venue
+        paper_info['authors'] = ', '.join([f'{a.get("given")} {a.get("family")}' for a in authors])
+        paper_info['affiliations'] = ', '.join({f'{af.get("name").split(",", 1)[0]}' for a in authors for af in a.get("affiliation")})
+        paper_info['countries'] = ', '.join({f'{af.get("name").split(",")[-1].strip()}' for a in authors for af in a.get("affiliation")})
     return paper_info

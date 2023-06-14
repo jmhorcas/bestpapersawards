@@ -1,5 +1,6 @@
 from flask import Flask
 import mongoengine
+import secrets
 
 from blueprints.table import table_bp
 from blueprints.add_paper import add_paper_bp
@@ -12,6 +13,8 @@ UPLOAD_FOLDER = 'uploads/certificates'
 # Create the App
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.secret_key = secrets.token_urlsafe(16)
+
 
 # Connect to the database
 mongoengine.connect('bpa_db', host='127.0.0.1', port=27017)
