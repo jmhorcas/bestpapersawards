@@ -1,10 +1,13 @@
 from flask import Flask
+from flask_login import LoginManager
 import mongoengine
 import secrets
 
 from blueprints.table import table_bp
 from blueprints.add_paper import add_paper_bp
+from blueprints.auth import auth_bp
 
+from blueprints.auth.models import User
 
 
 UPLOAD_FOLDER = 'uploads/certificates'
@@ -19,10 +22,20 @@ app.secret_key = secrets.token_urlsafe(16)
 # Connect to the database
 mongoengine.connect('bpa_db', host='127.0.0.1', port=27017)
 
+# Configure login
+login_manager = LoginManager(app)
+login_manager.login_view = "auth.login"
+
 # Register blueprints
 #app.register_blueprint(repository_bp, url_prefix='/repo')
 app.register_blueprint(table_bp, url_prefix='/')
 app.register_blueprint(add_paper_bp, url_prefix='/')
+app.register_blueprint(auth_bp, url_prefix='/')
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.objects(id=user_id).first()
 
 
 if __name__ == "__main__":
