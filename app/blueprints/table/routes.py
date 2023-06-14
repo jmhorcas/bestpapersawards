@@ -1,0 +1,18 @@
+from flask import render_template, send_from_directory, current_app
+from . import table_bp
+from models import Paper
+
+
+# Define routes and views
+@table_bp.route('/')
+def index():
+    papers = Paper.objects
+    for p in papers:
+        print(f'Verified: {p.verified}')
+    return render_template('table/index.html', data=papers)
+
+
+@table_bp.route('/<path:doi>', methods=['GET'])
+def download_certificate(doi):
+    paper = Paper.objects(doi=doi).first()
+    return send_from_directory(current_app.config["UPLOAD_FOLDER"], paper.certificate, as_attachment=True)

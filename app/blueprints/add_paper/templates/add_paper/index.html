@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Add Paper</h1>
+    <form action="{{ url_for('add_paper.add_paper') }}" method="POST" enctype="multipart/form-data">
+        <label for="doi">DOI/URL:</label>
+        <input type="text" name="doi" id="doi" required {% if data %}value="{{data.doi}}"{% endif %}>
+        <input type="submit" name="extract" value="Extract Info"><br><br>
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="title" size="100" {% if data %}value="{{data.title}}"{% endif %}><br><br>
+        <label for="authors">Authors:</label>
+        <input type="text" name="authors" id="authors" size="100" {% if data %}value="{{data.authors}}"{% endif %}><br><br>
+        <label for="affiliations">Affiliations:</label>
+        <input type="text" name="affiliations" id="affiliations" size="100" {% if data %}value="{{data.affiliations}}"{% endif %}><br><br>
+        <label for="countries">Countries:</label>
+        <input type="text" name="countries" id="countries" size="100" {% if data %}value="{{data.countries}}"{% endif %}><br><br>
+        <label for="venue">Venue:</label>
+        <input type="text" name="venue" id="venue" size="100" {% if data %}value="{{data.venue}}"{% endif %}><br><br>
+        <label for="year">Year:</label>
+        <input type="number" name="year" id="year" {% if data %}value="{{data.year}}"{% endif %}><br><br>
+        <label for="award">Award:</label>
+        <input type="text" name="award" id="award"><br><br>
+        <label for="certificate">Certificate:</label>
+        <input type="file" name="certificate" id="certificate"/><br><br>
+        <input type="submit" name="add" value="Add Paper">
+    </form>
+{% endblock %}
