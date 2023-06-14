@@ -20,7 +20,7 @@
                 <th>#</th>
                 <th>Venue</th>
                 <th>Year</th>
-                <th>Paper Ref.</th>
+                <th>DOI</th>
                 <th>Title</th>
                 <th>Authors</th>
                 <th>Affiliations</th>
@@ -36,14 +36,14 @@
                 <td>{{loop.index}}</td>
                 <td>{{paper.venue}}</td>
                 <td>{{paper.year}}</td>
-                <td>{{paper.doi}}</td>
+                <td><a href="{{paper.doi}}" title="Paper"><i class="fa-regular fa-file"></i></a></td>
                 <td>{{paper.title}}</td>
-                <td>{{paper.authors}}</td>
-                <td>{{paper.affiliations}}</td>
-                <td>{% for country in paper.countries %}<i class="flag-icon flag-icon-{{country.code}}"></i>{% endfor %}</td>
+                <td>{{paper.authors | join(',')}}</td>
+                <td>{{paper.affiliations | join (',')}}</td>
+                <td>{% for country in paper.countries %}<i class="flag-icon flag-icon-{{country.code}}" title={{country.name}}><span hidden>{{country.name}}</span></i>{% endfor %}</td>
                 <td>{{paper.award}}</td>
-                <td><a href="{{ url_for('table.download_certificate', doi=paper.doi) }}"><i class="fa-solid fa-trophy" style="color: goldenrod;"></i></a></td>
-                <td>{% if paper.verified %}<i class="fa-solid fa-circle-check" style="color: green;"></i>{% else %}<i class="fa-regular fa-circle-xmark" style="color: grey;"></i>{% endif %}</td>
+                <td><a href="{{ url_for('table.download_certificate', doi=paper.doi) }}" title="Download certificate"><i class="fa-solid fa-trophy" style="color: goldenrod;"></i></a></td>
+                <td>{% if paper.verified %}<i class="fa-solid fa-circle-check" style="color: green;" title="Verified"></i>{% else %}<i class="fa-regular fa-circle-xmark" style="color: grey;" title="Not verified"></i>{% endif %}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -52,7 +52,7 @@
                 <th>#</th>
                 <th>Venue</th>
                 <th>Year</th>
-                <th>Paper Ref.</th>
+                <th>DOI</th>
                 <th>Title</th>
                 <th>Authors</th>
                 <th>Affiliations</th>
