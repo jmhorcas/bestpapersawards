@@ -161,3 +161,4 @@ cython_debug/
 
 # Database instance
 db_instance/
+uploads/

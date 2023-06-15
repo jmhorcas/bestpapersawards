@@ -18,8 +18,8 @@ class Paper(Document):
 
 
 class Country(Document):
-    name = StringField()
-    code = StringField(primary_key=True, max_length=2)
+    name = StringField(primary_key=True)
+    code = StringField(max_length=2)
 
     def __repr__(self):
         return f'<{self.name} ({self.code})>'

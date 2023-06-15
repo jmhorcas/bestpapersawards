@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_login import LoginManager
 import mongoengine
 import secrets
@@ -6,6 +6,7 @@ import secrets
 from blueprints.table import table_bp
 from blueprints.add_paper import add_paper_bp
 from blueprints.auth import auth_bp
+from blueprints.admin import admin_bp
 
 from blueprints.auth.models import User
 
@@ -14,7 +15,10 @@ UPLOAD_FOLDER = 'uploads/certificates'
 
 
 # Create the App
-app = Flask(__name__)
+app = Flask(__name__,
+            template_folder='templates',
+            static_folder='static',
+            static_url_path='/static')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = secrets.token_urlsafe(16)
 
@@ -22,26 +26,32 @@ app.secret_key = secrets.token_urlsafe(16)
 # Connect to the database
 mongoengine.connect('bpa_db', host='127.0.0.1', port=27017)
 
+
 # Configure login
 login_manager = LoginManager(app)
 login_manager.login_view = "auth.login"
 
+
 # Register blueprints
 #app.register_blueprint(repository_bp, url_prefix='/repo')
 app.register_blueprint(table_bp, url_prefix='/')
-app.register_blueprint(add_paper_bp, url_prefix='/')
-app.register_blueprint(auth_bp, url_prefix='/')
+app.register_blueprint(add_paper_bp, url_prefix='/add')
+app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(admin_bp, url_prefix='/admin')
 
 
+# Error pages
+def page_not_found(e):
+  return render_template('404.html'), 404
+app.register_error_handler(404, page_not_found)
+
+
+# Login
 @login_manager.user_loader
 def load_user(user_id):
     return User.objects(id=user_id).first()
 
 
 if __name__ == "__main__":
-    #models.Model(name='Pizzas', year=2017, paper_reference='https://doi.org/10.1016/j.jss.2022.111551').save()
-    #models.Model(name='WeaFQAs', year=2018, paper_reference='https://doi.org/10.1016/j.jss.2022.111551').save()
-    #au = models.Author(orcid='0000-0002-7771-0575', first_name='Jose-Miguel', last_name='Horcas').save()
-    #print(au)
     # Launch the app
     app.run(debug=True)

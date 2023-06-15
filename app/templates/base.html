@@ -7,27 +7,51 @@
     <!-- Bootstrap's CSS-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
+    <!-- FontAwesome CSS for icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     {% block styles %}
     {% endblock %}
 
     <title>{% block title %}Best Papers Awards{% endblock %}</title>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('table.index') }}">Home</a></li>
-            <li><a href="{{ url_for('add_paper.add_paper') }}">Add Paper</a></li>
-            {% if current_user.is_anonymous %}
-                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                <li> | </li>
-                <li><a href="{{ url_for('auth.show_signup_form') }}">Sign up</a></li>
-            {% else %}
-                <li>{{ current_user.name }}</li>
-                <li> | </li>
-                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-            {% endif %}
-        </ul>
-    </nav>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{{ url_for('table.index') }}">Best Papers Awards</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{ url_for('table.index') }}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('add_paper.add_paper') }}">Add paper</a>
+              </li>
+              {% if current_user.is_anonymous %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.show_signup_form') }}">Sign up</a>
+                </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="#">{{ current_user.name }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+              </li>
+              {% endif %}
+
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <!-- End of Navigation bar -->
 
     <div class="content">
         {% block content %}{% endblock %}
@@ -37,6 +61,12 @@
     <footer>
         José Miguel Horcas &copy; 2023 Best Papers Awards. All rights reserved.
     </footer>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- JQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     {% block scripts %}
     {% endblock %}

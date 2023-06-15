@@ -6,13 +6,14 @@ from models import Paper
 # Define routes and views
 @table_bp.route('/')
 def index():
-    papers = Paper.objects
-    for p in papers:
-        print(f'Verified: {p.verified}')
-    return render_template('table/index.html', data=papers)
+    config = {}
+    config['table_id'] = 'bpa_table'
+
+    papers = Paper.objects().order_by('-year')
+    return render_template('table/index.html', data=papers, config=config)
 
 
-@table_bp.route('/<path:doi>', methods=['GET'])
+@table_bp.route('/certificate/<path:doi>', methods=['GET'])
 def download_certificate(doi):
     paper = Paper.objects(doi=doi).first()
     return send_from_directory(current_app.config["UPLOAD_FOLDER"], paper.certificate, as_attachment=True)
