@@ -1,6 +1,7 @@
 $(document).ready( function () {
     $('#bpa_table').DataTable({
         paging: false,
+        dom: '<"search"f><"search_info"i>rt<"bottom"lp><"clear">',
         columnDefs: [
             {
                 targets: [2, 3, -1, -2, -4],
