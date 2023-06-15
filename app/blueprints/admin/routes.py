@@ -1,5 +1,6 @@
 import os
 from flask import render_template, send_from_directory, current_app, request, redirect, url_for, flash
+from flask_login import login_required
 from werkzeug.utils import secure_filename
 from . import admin_bp
 from blueprints.add_paper.routes import ALLOWED_EXTENSIONS, allowed_file, extract_paper_from_request
@@ -11,6 +12,7 @@ from utils.country_code_map import get_country_code
 
 # Define routes and views
 @admin_bp.route('/')
+@login_required
 def index():
     config = {}
     config['table_id'] = 'bpa_admin_table'
@@ -20,6 +22,7 @@ def index():
 
 
 @admin_bp.route('/edit/<path:doi>/', methods=['GET'])
+@login_required
 def edit_paper(doi):
     # Global config variables for the template (to distinguished add_paper and edit_paper)
     config = {}
@@ -34,6 +37,7 @@ def edit_paper(doi):
     
 
 @admin_bp.route('/update/', methods=['POST'])
+@login_required
 def update_paper():
     # Global config variables for the template (to distinguished add_paper and edit_paper)
     config = {}
@@ -81,6 +85,7 @@ def update_paper():
    
 
 @admin_bp.route('/delete/<path:doi>/', methods=['GET'])
+@login_required
 def delete_paper(doi):
     paper = Paper.objects(doi=doi).first()
     if paper.certificate:

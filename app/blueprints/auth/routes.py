@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, current_app, flash
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from . import auth_bp
 from .forms import LoginForm, SignupForm
@@ -24,9 +24,10 @@ def login():
 
 
 @auth_bp.route("/signup/", methods=["GET", "POST"])
+@login_required
 def show_signup_form():
-    if current_user.is_authenticated:
-        return redirect(url_for('table.index'))
+    #if current_user.is_authenticated:
+    #    return redirect(url_for('table.index'))
     form = SignupForm()
     if form.validate_on_submit():
         name = form.name.data
@@ -37,12 +38,13 @@ def show_signup_form():
         user = User(id=user_id, username=name, email=email)
         user.set_password(password)
         user.save()
+        flash(f'New admin successfully registered.')
         # Maintain the user logged
-        login_user(user, remember=True)
-        next_page = request.args.get('next', None)
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('table.index')
-        return redirect(next_page)
+        #login_user(user, remember=True)
+        #next_page = request.args.get('next', None)
+        #if not next_page or url_parse(next_page).netloc != '':
+        #    next_page = url_for('table.index')
+        #return redirect(next_page)
     return render_template("auth/register.html", form=form)
 
 
