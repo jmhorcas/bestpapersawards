@@ -17,9 +17,9 @@
 </head>
 <body>
     <!-- Navigation bar -->
-    <nav class="navbar navbar-expand-md bg-dark mb-4" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-md bg-dark mb-4 py-0" data-bs-theme="dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{{ url_for('table.index') }}">Best Papers Awards</a>
+          <a class="navbar-brand" href="{{ url_for('table.index') }}"><i class="fa-solid fa-award" style="color: goldenrod;"></i>Best Papers Awards<i class="fa-solid fa-award" style="color: goldenrod;"></i></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -58,10 +58,10 @@
     <!-- End of Navigation bar -->
 
     <!-- Main title-->
-    <div class="px-4 my-5 text-center">
-      <h1 class="display-5 fw-bold">Best Papers Awards</h1>
+    <div class="px-4 py-0 my-0 text-center">
+      <h1 class="display-5 fw-bold"><i class="fa-solid fa-award" style="color: goldenrod;"></i>Best Papers Awards<i class="fa-solid fa-award" style="color: goldenrod;"></i></h1>
       <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">Unleashing Excellence: The hall of High Quality Research</p>
+        <p class="lead mb-4">Unleashing Excellence: The Hall of High Quality Research</p>
       </div>
     </div>
 
@@ -70,8 +70,10 @@
     </div>
 
     <!-- Common footer -->
-    <footer>
-        José Miguel Horcas &copy; 2023 Best Papers Awards. All rights reserved.
+    <footer class="bg-dark" data-bs-theme="dark">
+      <div class="container text-center">
+        <p class="text-muted credit">&copy; 2023 <a style="text-decoration: none; color: inherit" href="https://sites.google.com/view/josemiguelhorcas" title="Author">José Miguel Horcas</a>. All rights reserved.</p>
+      </div>
     </footer>
 
     <!-- Bootstrap -->
