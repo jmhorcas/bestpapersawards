@@ -1,6 +1,7 @@
 <td>{{paper.venue if paper.venue}}</td>
 <td>{{paper.year if paper.year}}</td>
-<td><a href="{{paper.doi}}" title="Paper"><i class="fa-regular fa-file"></i></a><span hidden>{{paper.doi}}</span></td>
+<td><a href="{{paper.doi}}" title="Paper"><i class="fa-regular fa-file-lines" style="color: black;"></i></a><span hidden>{{paper.doi}}</span></td>
+<td>{% if paper.extended_doi %}<a href="{{paper.extended_doi}}" title="Extended (journal) version"><i class="fa-solid fa-file-lines" style="color:black;"></i></a><span hidden>{{paper.extended_doi}}</span>{% endif %}</td>
 <td>{{paper.title if paper.title }}</td>
 <td>{{paper.authors | join(', ')}}</td>
 <td>{{paper.affiliations | join (', ')}}</td>

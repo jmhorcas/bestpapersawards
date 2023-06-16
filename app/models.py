@@ -3,6 +3,7 @@ from mongoengine import *
 
 class Paper(Document):
     doi = URLField(primary_key=True)
+    extended_doi = URLField()
     title = StringField()
     year = IntField()
     authors = ListField(StringField())

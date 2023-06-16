@@ -4,7 +4,7 @@ $(document).ready( function () {
         dom: '<"search"f><"search_info"i>rt<"bottom"lp><"clear">',
         columnDefs: [
             {
-                targets: [2, 3, -1, -2, -4],
+                targets: [2, 3, 4, -1, -2, -4],
                 className: 'dt-center'
             },
             {
@@ -25,7 +25,7 @@ $(document).ready( function () {
         paging: false,
         columnDefs: [
             {
-                targets: [2, 3, -1, -2, -3, -4, -5, -6],
+                targets: [2, 3, 4, -1, -2, -3, -4, -5, -6],
                 className: 'dt-center'
             },
             {
@@ -52,3 +52,5 @@ $(document).ready( function () {
 //       });
 //     });
 //   });
+
+$('#search').addClass('d-flex p-2');

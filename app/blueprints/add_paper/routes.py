@@ -1,5 +1,6 @@
 import os
 from flask import render_template, request, redirect, url_for, current_app, flash
+from flask_login import current_user
 from werkzeug.utils import secure_filename
 from . import add_paper_bp
 from models import Paper, Country
@@ -59,7 +60,10 @@ def add_paper():
             for c in paper.countries:
                 c.save()
             paper.save()
-            return redirect(url_for('table.index'))
+            if current_user.is_authenticated:
+                return redirect(url_for('admin.index'))    
+            else:
+                return redirect(url_for('table.index'))
     return render_template('add_paper/index.html', config=config) 
 
 
@@ -69,6 +73,7 @@ def extract_paper_from_request(request) -> Paper:
     year = request.form['year']
     venue = request.form['venue']
     award = request.form['award']
+    extended_doi = request.form['extended_doi']
     verified = bool(request.form.get('verified', False))
     # Process authors
     authors = request.form['authors']
@@ -91,6 +96,7 @@ def extract_paper_from_request(request) -> Paper:
     paper.year = year if year else None
     paper.venue = venue if venue else None
     paper.award = award if award else None
+    paper.extended_doi = extended_doi if extended_doi else None
     paper.verified = verified
     paper.authors = authors
     paper.affiliations = affiliations
