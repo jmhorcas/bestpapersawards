@@ -6,17 +6,18 @@ $(document).ready( function () {
         //"dom": "<'col-sm-12 col-md-4'><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>",
         //dom: "<'row'<'col-sm-12 col-md-4'><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'l>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
         //dom: "<'row'<'col'f>>" + "<'row'<'col'tr>>" + "<'row'<'col'i>>", // Use this for 100% search bar
-        dom: "<'row'<'col-6'f><'col-6'i>>" + "<'row'<'col'tr>>" + "<'row'<'col-6'l><'col-6'p>>", 
+        dom: "<'row gx-5'<'col-6'f><'col-6'i>>" + "<'row'<'col'tr>>" + "<'row'<'col-6'l><'col-6'p>>", 
         //dom: '<"search"f><"search_info"i>rt<"bottom"lp><"clear">',
         //sDom: 'z<"row-fluid"<"span4"C><"span4 lineitemcheckbox"><"span3"l>r><"row-fluid"<"span4 actiondropdown"><"span4"f><"span4 advsearch">><"row-fluid"<"span12 newrecordbutton">><"datatable-scroll"t><"row-fluid"<"span12"i><"span12 center"p>>',
         //sAlign: "left",
         language: {
-            searchPlaceholder: "Search",
-            search: "",
+            searchPlaceholder: "",
+            search: "🔍",
+            //search: "🔎",
         },
         columnDefs: [
             {
-                targets: [2, 3, 4, -1, -2, -4],
+                targets: [2, 3, 4, -3],
                 className: 'dt-center'
             },
             {
@@ -36,10 +37,15 @@ $.fn.DataTable.ext.classes.sFilterInput = "form-control form-control-lg";
 
 $(document).ready( function () {
     $('#bpa_admin_table').DataTable({
-        //paging: false,
+        paging: false,
+        dom: "<'row gx-5'<'col-6'f><'col-6'i>>" + "<'row'<'col'tr>>" + "<'row'<'col-6'l><'col-6'p>>", 
+        language: {
+            searchPlaceholder: "",
+            search: "🔍",
+        },
         columnDefs: [
             {
-                targets: [2, 3, 4, -1, -2, -3, -4, -5, -6],
+                targets: [2, 3, 4, -1, -2, -5,],
                 className: 'dt-center'
             },
             {
@@ -47,7 +53,7 @@ $(document).ready( function () {
                 className: 'dt-right'
             },
             {
-                targets: [3],
+                targets: [3, -1, -2],
                 orderable: false
             }
           ]

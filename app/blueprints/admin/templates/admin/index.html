@@ -3,8 +3,8 @@
 {% block table_header %}
     <tr>
         {% include 'table/table_columns.html' %}
-        <th></th>
-        <th></th>
+        <th><i class="fa-solid fa-pencil" style="color: black;" title="Edit paper information"></i></th>
+        <th><i class="fa-solid fa-trash-can" style="color: black;" title="Delete paper"></i></th>
     </tr>
 {% endblock %}
 
@@ -15,8 +15,8 @@
                     {% with paper=paper %}
                         {% include 'table/table_rows.html' %}
                     {% endwith %}
-                    <td><a href="{{ url_for('admin.edit_paper', doi=paper.doi) }}" title="Edit paper"><i class="fa-solid fa-pencil" style="color: orange;"></i></a></td>
-                    <td><a href="{{ url_for('admin.delete_paper', doi=paper.doi) }}" title="Edit paper"><i class="fa-solid fa-trash-can" style="color: red;"></i></a></td>
+                    <td><a href="{{ url_for('admin.edit_paper', doi=paper.doi) }}" title="Edit paper information"><i class="fa-solid fa-pencil" style="color: orange;"></i></a></td>
+                    <td><a href="{{ url_for('admin.delete_paper', doi=paper.doi) }}" title="Delete paper"><i class="fa-solid fa-trash-can" style="color: red;"></i></a></td>
                 </tr>
                 {% endfor %}
             {% endblock %}
@@ -24,7 +24,7 @@
 {% block table_footer %}
     <tr>
         {% include 'table/table_columns.html' %}
-        <th></th>
-        <th></th>
+        <th><i class="fa-solid fa-pencil" style="color: black;" title="Edit paper information"></i></th>
+        <th><i class="fa-solid fa-trash-can" style="color: black;" title="Delete paper"></i></th>
     </tr>
 {% endblock %}
