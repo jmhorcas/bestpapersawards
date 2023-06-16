@@ -3,9 +3,11 @@
 {% block styles %}
     <!-- Datatable -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="{{url_for('table.static', filename='css/datatable.css')}}" />
 
     <!-- Boostrap for Datatable styling -->
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
     
 
     <!-- Country flag-icons CSS-->
@@ -14,7 +16,7 @@
 
 {% block content %}
     <!-- <input class="form-control" id="myInput" type="text" placeholder="Search.."> -->
-    <table class="hover compact order-column" style="width:100%" id="{{config.table_id}}">
+    <table class="hover compact order-column" id="{{config.table_id}}">
         <thead>
             {% block table_header %}
                 <tr>
@@ -50,6 +52,6 @@
     <script src="{{url_for('table.static', filename='js/datatable.js')}}"></script>
 
     <!-- Boostrap for Datatable styling -->
-   <!-- <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script> -->
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 {% endblock %}
     

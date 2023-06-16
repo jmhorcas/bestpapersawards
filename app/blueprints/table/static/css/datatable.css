@@ -1,0 +1,48 @@
+/* .dataTables_wrapper .dataTables_filter {
+    width: 100%;
+    text-align: center;
+} */
+
+/* dataTables Search input box */
+
+/* .dataTables_filter input {
+    width: 250px;
+    height: 40px;
+    background: #fcfcfc;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+    text-indent: 10px;
+}
+
+.dataTables_filter .fa-search {
+    width: 250px;
+    position: absolute;
+    top: 10px;
+    left: auto;
+    right: 10px;
+}  */
+
+
+/* .dataTables_wrapper .dataTables_filter {
+    float: left;
+}
+
+.dataTables_wrapper .dataTables_length {
+    float: right;
+}  */
+
+.dataTables_filter {
+    width: 100%;
+}
+
+.dataTables_filter label {
+    width: 100%;
+}
+
+.dataTables_filter input.form-control.form-control-sm {
+    width: 100%;
+    box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+    border-radius: 5px;
+    background: #fcfcfc;
+}
