@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/about.css')}}" />
+{% endblock %}
+
+
+{% block main_title %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    About
+                  </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        This website is a comprehensive repository dedicated to showcasing the best paper awards from various conferences and communities across different academic and professional fields. It serves as a centralized platform where researchers, professionals, and enthusiasts can explore and celebrate outstanding contributions in their respective domains.
+                    </p>
+                    <p class="card-text">
+                        We understand the value of recognizing excellence in research and the impact it has on advancing knowledge and innovation. Our mission is to bring together the collective achievements of researchers and honor their exceptional work through a curated collection of best paper awards.
+                    </p>
+                    <p class="card-text">
+                        This website aims to foster collaboration, inspiration, and appreciation within the academic and professional communities.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-trophy" style="color: goldenrod;"></i>Best paper award<i class="fa-solid fa-trophy" style="color: goldenrod;"></i>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        A "best paper award" is a recognition given to a research article that is deemed to be of exceptional quality or significance within a specific academic or professional field. It is a way to acknowledge and honor outstanding contributions to the field of study.
+                    </p>
+                    <p class="card-text">
+                        Best paper awards are often presented at conferences, symposiums, or other academic events where researchers and professionals gather to share their work. The selection process for best paper awards varies depending on the event and organization hosting it. Typically, a panel of experts, conference organizers, or a designated committee reviews the submitted papers and evaluates them based on criteria such as originality, significance, methodology, contribution to the field, and overall quality.
+                    </p>
+                    <p class="card-text">
+                        Receiving a best paper award is considered a prestigious achievement and reflects the recognition and validation of the paper's quality by the academic or professional community. It can enhance the visibility and credibility of the authors' work, potentially leading to increased opportunities for collaboration, further research funding, and career advancement.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    The author
+                  </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        The brainchild of [Your Name], a passionate researcher and advocate for scholarly contributions, this website aims to foster collaboration, inspiration, and appreciation within the academic and professional communities. As the creator and curator of this platform, [Your Name] has meticulously gathered information about the papers and awards, striving to provide accurate and up-to-date details for each entry.
+                    </p>
+                    <p class="card-text">
+                        We are constantly striving to improve and expand our database to ensure its comprehensiveness and accuracy. If you have any suggestions, feedback, or would like to contribute to our growing collection, please don't hesitate to reach out to us.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

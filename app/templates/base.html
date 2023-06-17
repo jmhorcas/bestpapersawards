@@ -43,7 +43,7 @@
               </li>
               {% if current_user.is_anonymous %}
                 <li class="nav-item">
-                    <a class="nav-link {{ 'active' if request.path == url_for('auth.login') }}" {% if request.path == url_for('auth.login') %} aria-current="page" {% endif %} href="{{ url_for('auth.login') }}">Login</a>
+                    <a class="nav-link {{ 'active' if request.path == url_for('auth.login') }}" {% if request.path == url_for('auth.login') %} aria-current="page" {% endif %} href="{{ url_for('auth.login') }}">Admin</a>
                 </li>
               {% else %}
               <li class="nav-item dropdown">
@@ -61,12 +61,16 @@
               </li>
               {% endif %}
 
+              <li class="nav-item">
+                <a class="nav-link {{ 'active' if request.path == url_for('about') }}" {% if request.path == url_for('about') %} aria-current="page" {% endif %} href="{{ url_for('about') }}">About</a>
+              </li>
             </ul>
           </div>
         </div>
       </nav>
     <!-- End of Navigation bar -->
 
+    {% block main_title %}
     <!-- Main title-->
     <div class="px-4 py-0 my-0 text-center">
       <h1 class="display-5 fw-bold"><i class="fa-solid fa-trophy" style="color: goldenrod;"></i>Best Papers Awards<i class="fa-solid fa-trophy" style="color: goldenrod;"></i></h1>
@@ -74,6 +78,7 @@
         <p class="lead mb-4">Unleashing Excellence: The Hall of High Quality Research</p>
       </div>
     </div>
+    {% endblock %}
 
     <div class="container-fluid">
         {% block content %}{% endblock %}

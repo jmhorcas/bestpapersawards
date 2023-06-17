@@ -46,6 +46,12 @@ def page_not_found(e):
 app.register_error_handler(404, page_not_found)
 
 
+# About page
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
 # Login
 @login_manager.user_loader
 def load_user(user_email):
