@@ -1,77 +1,81 @@
-<form action="{{ url_for(config.url_for_action) }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-    <div class="row mb-3 has-validation">
-        <label for="doi" class="col-sm-1 col-form-label">DOI/URL</label>
-        <div class="col-sm-4">
-            <input type="url" class="form-control {% if not data %} is-invalid {% endif %}" name="doi" id="doi" aria-describedby="validationDoi" required {% if data and data.doi %}value="{{data.doi}}"{% endif %} {% if config.readonly_doi %}readonly{% endif %}>
+<form action="{{ url_for(config.url_for_action) }}" method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+    <div class="row gy-1 has-validation">
+        <div class="col-sm-6">
+            <label for="doi" class="form-label">DOI/URL</label>
+            <input type="url" class="form-control " name="doi" id="doi" aria-describedby="validationDoi" required {% if data and data.doi %}value="{{data.doi}}"{% endif %} {% if config.readonly_doi %}readonly{% endif %}>
             <div id="validationDoi" class="invalid-feedback">
                 Please provide a valid DOI/URL.
             </div>
         </div>
         <div class="col-sm-1">
-            <input type="submit" class="btn btn-secondary" name="extract" value="Extract Info">
+            <div class="row">
+                <label class="form-label" style="visibility:hidden;">Extract info</label>
+            </div>
+            <div class="row">
+                <input type="submit" class="btn btn-secondary" name="extract" value="Extract Info">
+            </div>
         </div>        
     </div>
-    <div class="row mb-3">
-        <label for="extended_doi" class="col-sm-1 col-form-label">Ext. version</label>
-        <div class="col-sm-4">
+    <div class="row gy-1">
+        <div class="col-sm-6">
+            <label for="extended_doi" class="form-label">Ext. version</label>
             <input type="url" class="form-control" name="extended_doi" id="extended_doi" {% if data and data.extended_doi %}value="{{data.extended_doi}}"{% endif %}>
             <div class="invalid-feedback">
                 Please provide a valid DOI/URL.
             </div>
         </div>
     </div>
-    <div class="row mb-3">
-        <label for="title" class="col-sm-1 col-form-label">Title</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" name="title" id="title" size="100" {% if data and data.title %}value="{{data.title}}"{% endif %}>
+    <div class="row gy-1">
+        <div class="col-sm-6">
+            <label for="title" class="form-label">Title</label>
+            <textarea type="text" class="form-control" name="title" id="title" rows="3">{% if data and data.title %}{{data.title}}{% endif %}</textarea>
         </div>
     </div>
-    <div class="row mb-3">
-        <label for="authors" class="col-sm-1 col-form-label">Authors</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" name="authors" id="authors" size="100" {% if data and data.authors %}value="{{data.authors | join(', ')}}"{% endif %}>
+    <div class="row gy-1">
+        <div class="col-sm-2">
+            <label for="authors" class="form-label">Authors</label>
+            <textarea type="text" class="form-control" name="authors" id="authors" rows="3">{% if data and data.authors %}{{data.authors | join(', ')}}{% endif %}</textarea>
+        </div>
+        <div class="col-sm-2">
+            <label for="affiliations" class="form-label">Affiliations</label>
+            <textarea type="text" class="form-control" name="affiliations" id="affiliations" rows="3">{% if data and data.affiliations %}{{data.affiliations | join(', ')}}{% endif %}</textarea>
+        </div>
+        <div class="col-sm-2">
+            <label for="countries" class="form-label">Countries</label>
+            <textarea type="text" class="form-control" name="countries" id="countries" rows="3">{% if data and data.countries %}{{data.countries | map(attribute='name') | join(', ')}}{% endif %}</textarea>
         </div>
     </div>
-    <div class="row mb-3">
-        <label for="affiliations" class="col-sm-1 col-form-label">Affiliations</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" name="affiliations" id="affiliations" size="100" {% if data and data.affiliations %}value="{{data.affiliations | join(', ')}}"{% endif %}>
+    <div class="row gy-1">
+        <div class="col-sm-5">
+            <label for="venue" class="form-label">Venue</label>
+            <input type="text" class="form-control" name="venue" id="venue" {% if data and data.venue %}value="{{data.venue}}"{% endif %}>
         </div>
-    </div>
-    <div class="row mb-3">
-        <label for="countries" class="col-sm-1 col-form-label">Countries</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" name="countries" id="countries" size="100" {% if data and data.countries %}value="{{data.countries | map(attribute='name') | join(', ')}}"{% endif %}>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="venue" class="col-sm-1 col-form-label">Venue</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" name="venue" id="venue" size="100" {% if data and data.venue %}value="{{data.venue}}"{% endif %}>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="year" class="col-sm-1 col-form-label">Year</label>
-        <div class="col-sm-4">
+        <div class="col-sm-1">
+            <label for="year" class="form-label">Year</label>
             <input type="number" class="form-control" name="year" id="year" {% if data and data.year %}value="{{data.year}}"{% endif %}>
         </div>
     </div>
-    <div class="row mb-3">
-        <label for="award" class="col-sm-1 col-form-label">Award</label>
-        <div class="col-sm-4">
+    <div class="row gy-1">
+        <div class="col-sm-3">
+            <label for="award" class="form-label">Award</label>
             <input type="text" class="form-control" name="award" id="award" {% if data and data.award %}value="{{data.award}}"{% endif %}>
         </div>
-    </div>
-    <div class="row mb-3">
-        <label for="certificate" class="col-sm-1 col-form-label">Certificate</label>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
+            <label for="certificate" class="form-label">Certificate</label>
             <input type="file" class="form-control" name="certificate" id="certificate"/>
         </div>
         {% if config.download_certificate %}
-            <label class="col-sm-1 col-form-label">{% if data and data.certificate %}<a href="{{ url_for('table.download_certificate', doi=data.doi) }}" title="Download certificate"><i class="fa-solid fa-download" style="color: green;"></i></a>{% else %}<i class="fa-solid fa-download" style="color: gray;" title="Not available"></i>{% endif %}</label>
+            <div class="col-sm-1">
+                <div class="row">
+                    <label class="form-label" style="visibility:hidden;">Download certificate</label>
+                </div>
+                <div class="row">
+                    <label class="form-label">{% if data and data.certificate %}<a href="{{ url_for('table.download_certificate', doi=data.doi) }}" title="Download certificate"><i class="fa-solid fa-download" style="color: green;"></i></a>{% else %}<i class="fa-solid fa-download" style="color: gray;" title="Not available"></i>{% endif %}</label>
+                </div>
+            </div>      
         {% endif %}
-    </div>   
-    <div class="row mb-3">
+    </div>
+    <div class="row gy-1">
         <div class="col-sm-1">
             <input type="submit" class="btn btn-primary" name="{{config.submit_action}}" value="{{config.submit_botton}}">
         </div>
@@ -88,5 +92,4 @@
             {% endwith %}
         </div>
     </div>
-    
 </form>
