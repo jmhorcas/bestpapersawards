@@ -48,10 +48,14 @@ app.register_error_handler(404, page_not_found)
 
 # Login
 @login_manager.user_loader
-def load_user(user_id):
-    return User.objects(id=user_id).first()
+def load_user(user_email):
+    return User.objects(email=user_email).first()
 
 
 if __name__ == "__main__":
     # Launch the app
+    if not User.objects(email='horcas@uma.es'):
+      user = User(email='horcas@uma.es')
+      user.set_password('basket')
+      user.save()
     app.run(debug=True)

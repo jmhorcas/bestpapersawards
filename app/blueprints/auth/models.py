@@ -5,13 +5,11 @@ from flask_login import UserMixin
 
 
 class User(UserMixin, Document):
-    id = IntField(primary_key=True)
-    username = StringField(max_length=64, unique=True)
-    email = StringField(max_length=120, unique=True)
+    email = StringField(primary_key=True, max_length=120)
     password_hash = StringField(max_length=128)
 
     def __repr__(self):
-        return f"<User {self.username}>"
+        return f"<User {self.email}>"
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

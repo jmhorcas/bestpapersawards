@@ -4,3 +4,8 @@
     <h1>Add new best paper award</h1>
     {% include 'add_paper/paper_form.html' %}
 {% endblock %}
+
+{% block scripts %}
+    <!-- Validation form -->
+    <script src="{{url_for('add_paper.static', filename='js/form_validation.js')}}"></script>
+{% endblock %}

@@ -1,43 +1,92 @@
-<form action="{{ url_for(config.url_for_action) }}" method="POST" enctype="multipart/form-data">
-    <label for="doi">DOI/URL:</label>
-    <input type="text" name="doi" id="doi" required {% if data and data.doi %}value="{{data.doi}}"{% endif %} {% if config.readonly_doi %}readonly{% endif %}>
-    <input type="submit" name="extract" value="Extract Info">
-    {% with messages = get_flashed_messages(category_filter=["info"]) %}
-        {% if messages %}
-            {% for message in messages %}
-                <span class="alert alert-warning" role="alert">{{ message }}</span>
-            {% endfor %}
+<form action="{{ url_for(config.url_for_action) }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div class="row mb-3 has-validation">
+        <label for="doi" class="col-sm-1 col-form-label">DOI/URL</label>
+        <div class="col-sm-4">
+            <input type="url" class="form-control {% if not data %} is-invalid {% endif %}" name="doi" id="doi" aria-describedby="validationDoi" required {% if data and data.doi %}value="{{data.doi}}"{% endif %} {% if config.readonly_doi %}readonly{% endif %}>
+            <div id="validationDoi" class="invalid-feedback">
+                Please provide a valid DOI/URL.
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <input type="submit" class="btn btn-secondary" name="extract" value="Extract Info">
+        </div>        
+    </div>
+    <div class="row mb-3">
+        <label for="extended_doi" class="col-sm-1 col-form-label">Ext. version</label>
+        <div class="col-sm-4">
+            <input type="url" class="form-control" name="extended_doi" id="extended_doi" {% if data and data.extended_doi %}value="{{data.extended_doi}}"{% endif %}>
+            <div class="invalid-feedback">
+                Please provide a valid DOI/URL.
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="title" class="col-sm-1 col-form-label">Title</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" name="title" id="title" size="100" {% if data and data.title %}value="{{data.title}}"{% endif %}>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="authors" class="col-sm-1 col-form-label">Authors</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" name="authors" id="authors" size="100" {% if data and data.authors %}value="{{data.authors | join(', ')}}"{% endif %}>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="affiliations" class="col-sm-1 col-form-label">Affiliations</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" name="affiliations" id="affiliations" size="100" {% if data and data.affiliations %}value="{{data.affiliations | join(', ')}}"{% endif %}>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="countries" class="col-sm-1 col-form-label">Countries</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" name="countries" id="countries" size="100" {% if data and data.countries %}value="{{data.countries | map(attribute='name') | join(', ')}}"{% endif %}>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="venue" class="col-sm-1 col-form-label">Venue</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" name="venue" id="venue" size="100" {% if data and data.venue %}value="{{data.venue}}"{% endif %}>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="year" class="col-sm-1 col-form-label">Year</label>
+        <div class="col-sm-4">
+            <input type="number" class="form-control" name="year" id="year" {% if data and data.year %}value="{{data.year}}"{% endif %}>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="award" class="col-sm-1 col-form-label">Award</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" name="award" id="award" {% if data and data.award %}value="{{data.award}}"{% endif %}>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="certificate" class="col-sm-1 col-form-label">Certificate</label>
+        <div class="col-sm-4">
+            <input type="file" class="form-control" name="certificate" id="certificate"/>
+        </div>
+        {% if config.download_certificate %}
+            <label class="col-sm-1 col-form-label">{% if data and data.certificate %}<a href="{{ url_for('table.download_certificate', doi=data.doi) }}" title="Download certificate"><i class="fa-solid fa-download" style="color: green;"></i></a>{% else %}<i class="fa-solid fa-download" style="color: gray;" title="Not available"></i>{% endif %}</label>
         {% endif %}
-    {% endwith %}
-    <br><br>
-    <label for="extended_doi">DOI/URL of extended (journal) version:</label>
-    <input type="text" name="extended_doi" id="extended_doi" {% if data and data.extended_doi %}value="{{data.extended_doi}}"{% endif %}><br><br>
-    <label for="title">Title:</label>
-    <input type="text" name="title" id="title" size="100" {% if data and data.title %}value="{{data.title}}"{% endif %}><br><br>
-    <label for="authors">Authors:</label>
-    <input type="text" name="authors" id="authors" size="100" {% if data and data.authors %}value="{{data.authors | join(', ')}}"{% endif %}><br><br>
-    <label for="affiliations">Affiliations:</label>
-    <input type="text" name="affiliations" id="affiliations" size="100" {% if data and data.affiliations %}value="{{data.affiliations | join(', ')}}"{% endif %}><br><br>
-    <label for="countries">Countries:</label>
-    <input type="text" name="countries" id="countries" size="100" {% if data and data.countries %}value="{{data.countries | map(attribute='name') | join(', ')}}"{% endif %}><br><br>
-    <label for="venue">Venue:</label>
-    <input type="text" name="venue" id="venue" size="100" {% if data and data.venue %}value="{{data.venue}}"{% endif %}><br><br>
-    <label for="year">Year:</label>
-    <input type="number" name="year" id="year" {% if data and data.year %}value="{{data.year}}"{% endif %}><br><br>
-    <label for="award">Award:</label>
-    <input type="text" name="award" id="award" {% if data and data.award %}value="{{data.award}}"{% endif %}><br><br>
-    <label for="certificate">Certificate:</label>
-    {% if config.download_certificate %}
-    <label>{% if data and data.certificate %}<a href="{{ url_for('table.download_certificate', doi=data.doi) }}" title="Download certificate"><i class="fa-solid fa-download" style="color: green;"></i></a>{% else %}<i class="fa-solid fa-download" style="color: gray;" title="Not available"></i>{% endif %}</label>
-    {% endif %}
-    <input type="file" name="certificate" id="certificate"/>
-    {% with messages = get_flashed_messages(category_filter=["error"]) %}
-        {% if messages %}
-            {% for message in messages %}
-                <span class="alert alert-danger" role="alert">{{ message }}</span>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    <br><br>
-    <input type="submit" name="{{config.submit_action}}" value="{{config.submit_botton}}">
+    </div>   
+    <div class="row mb-3">
+        <div class="col-sm-1">
+            <input type="submit" class="btn btn-primary" name="{{config.submit_action}}" value="{{config.submit_botton}}">
+        </div>
+        <div class="col-sm-5">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    {% if category == "info" %}
+                        <div class="alert alert-warning" role="alert">{{ message }}</div>
+                    {% endif %}
+                    {% if category == "error" %}
+                        <div class="alert alert-danger" role="alert">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
+    
 </form>
