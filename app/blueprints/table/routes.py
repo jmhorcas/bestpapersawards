@@ -6,11 +6,8 @@ from models import Paper
 # Define routes and views
 @table_bp.route('/')
 def index():
-    config = {}
-    config['table_id'] = 'bpa_table'
-
     papers = Paper.objects().order_by('-year')
-    return render_template('table/index.html', data=papers, config=config)
+    return render_template('table/index.html', data=papers)
 
 
 @table_bp.route('/certificate/<path:doi>', methods=['GET'])

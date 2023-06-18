@@ -14,11 +14,8 @@ from utils.country_code_map import get_country_code
 @admin_bp.route('/')
 @login_required
 def index():
-    config = {}
-    config['table_id'] = 'bpa_admin_table'
-
     papers = Paper.objects().order_by('-year')
-    return render_template('admin/index.html', data=papers, config=config)
+    return render_template('admin/index.html', data=papers)
 
 
 @admin_bp.route('/edit/<path:doi>/', methods=['GET'])
