@@ -75,6 +75,14 @@
             </div>      
         {% endif %}
     </div>
+    {% if not current_user.is_anonymous %}
+    <div class="row gy-1">
+        <div class="col-sm-6 form-check form-switch">
+            <label for="verified" class="form-check-label">Verified</label>
+            <input type="checkbox" role="switch" class="form-control form-check-input" name="verified" id="verified" {% if data and data.verified %}checked{% endif %}>
+        </div>
+    </div>
+    {% endif %}
     <div class="row gy-1">
         <div class="col-sm-1">
             <input type="submit" class="btn btn-primary" name="{{config.submit_action}}" value="{{config.submit_botton}}">
