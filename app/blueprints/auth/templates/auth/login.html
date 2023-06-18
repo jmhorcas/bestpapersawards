@@ -2,29 +2,70 @@
 
 {% block title %}Login{% endblock %}
 
+
+{% block main_title %}
+{% endblock %}
+
+
 {% block content %}
-    <div>
-        <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-            <div>
-                {{ form.email.label }}
-                {{ form.email }}<br>
-                {% for error in form.email.errors %}
-                <span style="color: red;">{{ error }}</span>
-                {% endfor %}
-            </div>
-            <div>
-                {{ form.password.label }}
-                {{ form.password }}<br>
-                {% for error in form.password.errors %}
-                <span style="color: red;">{{ error }}</span>
-                {% endfor %}
-            </div>
-            <div>{{ form.remember_me() }} {{ form.remember_me.label }}</div>
-            <div>
-                {{ form.submit() }}
-            </div>
-        </form>
+<div class="container-flex">
+    <div class="d-flex justify-content-center">
+        <h2>Admin login</h2>
     </div>
-    <div>Need an account?<a href="{{ url_for('auth.show_signup_form') }}">Sign up</a></div>
+    <div class="d-flex justify-content-center">
+        <form action="{{ url_for('auth.login') }}" method="POST" class="row g-3 needs-validation" novalidate>
+            <div class="row g-3 d-flex justify-content-center">
+                <div class="col-sm-4">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid email address.
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 d-flex justify-content-center">
+                <div class="col-sm-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" required>
+                    <div class="invalid-feedback">
+                        Please fill out this field.
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 d-flex justify-content-center">
+                <div class="col-sm-4 form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberme">
+                    <label class="form-check-label" for="rememberme">Remember me</label>
+                </div>
+            </div>
+            <div class="row g-3 d-flex justify-content-center">
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+            <div class="row g-3  d-flex justify-content-center">
+                <div class="col-sm-4">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% for category, message in messages %}
+                            {% if category == "info" %}
+                                <div class="alert alert-success" role="alert">{{ message }}</div>
+                            {% endif %}
+                            {% if category == "warning" %}
+                                <div class="alert alert-warning" role="alert">{{ message }}</div>
+                            {% endif %}
+                            {% if category == "error" %}
+                                <div class="alert alert-danger" role="alert">{{ message }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+            </div>
+          </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- Validation form -->
+    <script src="{{url_for('add_paper.static', filename='js/form_validation.js')}}"></script>
 {% endblock %}
