@@ -10,58 +10,70 @@
 
 
 {% block content %}
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="card">
-                <div class="card-header">
-                    About
-                  </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        This website is a comprehensive repository dedicated to showcasing the best paper awards from various conferences and communities across different academic and professional fields. It serves as a centralized platform where researchers, professionals, and enthusiasts can explore and celebrate outstanding contributions in their respective domains.
-                    </p>
-                    <p class="card-text">
-                        We understand the value of recognizing excellence in research and the impact it has on advancing knowledge and innovation. Our mission is to bring together the collective achievements of researchers and honor their exceptional work through a curated collection of best paper awards.
-                    </p>
-                    <p class="card-text">
-                        This website aims to foster collaboration, inspiration, and appreciation within the academic and professional communities.
-                    </p>
-                </div>
+<h2>About...</h2>
+      <div class="card">
+        <div class="card-header">
+            <!-- <h5 class="card-title">About...</h5> -->
+            <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#website">This website</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#bpa">Best paper award</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#author">The author</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body tab-content">
+            <div class="tab-pane active" id="website">
+                <p class="card-text">
+                    This website is a comprehensive repository dedicated to showcasing the best paper awards from various conferences and communities across different academic and professional fields. It serves as a centralized platform where researchers, professionals, and enthusiasts can explore and celebrate outstanding contributions in their respective domains.
+                </p>
+                <p class="card-text">
+                    We understand the value of recognizing excellence in research and the impact it has on advancing knowledge and innovation. Our mission is to bring together the collective achievements of researchers and honor their exceptional work through a curated collection of best paper awards.
+                </p>
+                <p class="card-text">
+                    This website aims to foster collaboration, inspiration, and appreciation within the academic and professional communities.
+                </p>
+            </div>
+            <div class="tab-pane" id="bpa">
+                <p class="card-text">
+                    A "best paper award" is a recognition given to a research article that is deemed to be of exceptional quality or significance within a specific academic or professional field. It is a way to acknowledge and honor outstanding contributions to the field of study.
+                </p>
+                <p class="card-text">
+                    Best paper awards are often presented at conferences, symposiums, or other academic events where researchers and professionals gather to share their work. The selection process for best paper awards varies depending on the event and organization hosting it. Typically, a panel of experts, conference organizers, or a designated committee reviews the submitted papers and evaluates them based on criteria such as originality, significance, methodology, contribution to the field, and overall quality.
+                </p>
+                <p class="card-text">
+                    Receiving a best paper award is considered a prestigious achievement and reflects the recognition and validation of the paper's quality by the academic or professional community. It can enhance the visibility and credibility of the authors' work, potentially leading to increased opportunities for collaboration, further research funding, and career advancement.
+                </p>
+            </div>
+            <div class="tab-pane" id="author">
+                <p class="card-text">
+                    <a href="https://sites.google.com/view/josemiguelhorcas">José Miguel Horcas</a>, a passionate researcher and advocate for high quality contributions. 
+                </p>
+                <p class="card-text">
+                    As the creator and curator of this platform, José Miguel has meticulously gathered information about the papers and awards, striving to provide accurate and up-to-date details for each entry.
+                </p>
+                <p class="card-text">
+                    <a href="https://www.buymeacoffee.com/jmhorcas"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&emoji=🍺&slug=jmhorcas&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
+                </p>
+                </p>
+            </div>
+            <div class="tab-pane" id="contact">
+                <p class="card-text">
+                    We are constantly striving to improve and expand our database to ensure its comprehensiveness and accuracy.
+                </p>
+                <p class="card-text">
+                    If you have any suggestions, feedback, or would like to contribute to our growing collection, please don't hesitate to reach out to us.
+                </p>
+                <a class="btn btn-primary" href="mailto:horcas@uma.es?subject=Contact about Best Papers Awards" role="button">Contact</a>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa-solid fa-trophy" style="color: goldenrod;"></i>Best paper award<i class="fa-solid fa-trophy" style="color: goldenrod;"></i>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        A "best paper award" is a recognition given to a research article that is deemed to be of exceptional quality or significance within a specific academic or professional field. It is a way to acknowledge and honor outstanding contributions to the field of study.
-                    </p>
-                    <p class="card-text">
-                        Best paper awards are often presented at conferences, symposiums, or other academic events where researchers and professionals gather to share their work. The selection process for best paper awards varies depending on the event and organization hosting it. Typically, a panel of experts, conference organizers, or a designated committee reviews the submitted papers and evaluates them based on criteria such as originality, significance, methodology, contribution to the field, and overall quality.
-                    </p>
-                    <p class="card-text">
-                        Receiving a best paper award is considered a prestigious achievement and reflects the recognition and validation of the paper's quality by the academic or professional community. It can enhance the visibility and credibility of the authors' work, potentially leading to increased opportunities for collaboration, further research funding, and career advancement.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div class="card-header">
-                    The author
-                  </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        The brainchild of [Your Name], a passionate researcher and advocate for scholarly contributions, this website aims to foster collaboration, inspiration, and appreciation within the academic and professional communities. As the creator and curator of this platform, [Your Name] has meticulously gathered information about the papers and awards, striving to provide accurate and up-to-date details for each entry.
-                    </p>
-                    <p class="card-text">
-                        We are constantly striving to improve and expand our database to ensure its comprehensiveness and accuracy. If you have any suggestions, feedback, or would like to contribute to our growing collection, please don't hesitate to reach out to us.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+   </div>
 {% endblock %}
 

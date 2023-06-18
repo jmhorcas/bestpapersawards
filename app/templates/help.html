@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/about.css')}}" />
+{% endblock %}
+
+
+{% block main_title %}
+{% endblock %}
+
+
+{% block content %}
+<h2>Help</h2>
+<!-- <div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Help</h5>
+        <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#add"><i class="fa-regular fa-square-plus" style="color: grey;" title="Not verified"></i> Add your best paper award</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#verification"><i class="fa-solid fa-circle-minus" style="color: grey;" title="Not verified"></i> Not Verified?</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#edits"><i class="fa-solid fa-pencil" style="color: grey;"></i> Errors in paper's information</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body tab-content">
+        <div class="tab-pane active" id="add">
+            <p class="card-text">
+                Go to <a href="{{ url_for('add_paper.add_paper') }}">Add paper</a> and load the details of your best paper award by providing its DOI/URL.
+            </p>
+            <p class="card-text">
+                If the paper's information is incorrect or cannot be automatically extracted, please fix it or fill it out.
+            </p>
+        </div>
+        <div class="tab-pane" id="verification">
+            <p class="card-text">
+                You can verify a best paper award by sending the corresponding certificate or proof (formats allowed: 'pdf', 'png', 'jpg', 'jpeg') to the <a href="mailto:horcas@uma.es?subject=Best paper award verification&body=DOI: %0d%0aCertificate: (attached)%0d%0a">Admin</a> with the paper's DOI copied into the email's body.
+            </p>
+        </div>
+        <div class="tab-pane" id="edits">
+            <p class="card-text">
+                First of all: Sorry, but errors always may happen...
+            </p>
+            <p class="card-text">
+                You cannot correct errors in the repository by yourself, but you can make us aware of errors in our data via <a href="mailto:horcas@uma.es?subject=Error in best paper award&body=DOI: %0d%0aError description: %0d%0a">email</a>. We will try to correct errors within a few days.
+            </p>
+        </div>
+    </div>
+</div> -->
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa-regular fa-square-plus" style="color: grey;" title="Not verified"></i> Add your best paper award
+                  </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Go to <a href="{{ url_for('add_paper.add_paper') }}">Add paper</a> and load the details of your best paper award by providing its DOI/URL.
+                        If the paper's information is incorrect or cannot be automatically extracted, please fix it or fill it out.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-circle-minus" style="color: grey;" title="Not verified"></i> Not Verified?
+                  </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        You can verify a best paper award by sending the corresponding certificate or proof (formats allowed: 'pdf', 'png', 'jpg', 'jpeg') to the <a href="mailto:horcas@uma.es?subject=Best paper award verification&body=DOI: %0d%0aCertificate: (attached)%0d%0a">Admin</a> with the paper's DOI copied into the email's body.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-pencil" style="color: grey;"></i> Errors in paper's information
+                  </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        First of all: Sorry, but errors always may happen...
+                        You cannot correct errors in the repository by yourself, but you can make us aware of errors in our data via <a href="mailto:horcas@uma.es?subject=Error in best paper award&body=DOI: %0d%0aError description: %0d%0a">email</a>. We will try to correct errors within a few days.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

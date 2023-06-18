@@ -52,6 +52,12 @@ def about():
     return render_template('about.html')
 
 
+# Help page
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
+
 # Login
 @login_manager.user_loader
 def load_user(user_email):
