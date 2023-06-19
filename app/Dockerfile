@@ -1,4 +1,4 @@
-FROM python:3.10-alpine:latest
+FROM python:3.9.17-alpine3.18
 
 LABEL MAINTAINER="José Miguel Horcas <horcas@uma.es>"
 
@@ -11,8 +11,8 @@ ADD . /var/www/
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
-RUN addgroup -g $usuario www
-RUN adduser -D -u $usuario -G www www -s /bin/sh
+RUN addgroup -g $GROUP_ID www
+RUN adduser -D -u $USER_ID -G www www -s /bin/sh
 
 USER www
 
