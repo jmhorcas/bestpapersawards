@@ -4,6 +4,9 @@ from flask_login import LoginManager
 import mongoengine
 import secrets
 
+from dotenv import load_dotenv
+load_dotenv('.env')
+
 from blueprints.table import table_bp
 from blueprints.add_paper import add_paper_bp
 from blueprints.auth import auth_bp
@@ -25,7 +28,8 @@ app.secret_key = secrets.token_urlsafe(16)
 
 
 # Connect to the database
-mongoengine.connect('bpa_db', host='127.0.0.1', port=27017, username='jmhorcas', password='basket', authentication_source='admin')
+#mongoengine.connect('bpa_db', host='127.0.0.1', port=27017, username='jmhorcas', password='basket', authentication_source='admin')
+mongoengine.connect('bpa_db', host='127.0.0.1', port=27017)
 
 
 # Configure login
