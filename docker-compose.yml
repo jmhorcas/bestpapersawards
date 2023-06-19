@@ -12,6 +12,8 @@ services:
       APP_ENV: "prod"
       APP_DEBUG: "False"
       APP_PORT: 5000
+      ADMIN_USER_EMAIL: $${ADMIN_USER_EMAIL}
+      ADMIN_PASS: $${ADMIN_PASS}
       MONGODB_DATABASE: bpadb
       MONGODB_USERNAME: $${DB_USER}
       MONGODB_PASSWORD: $${DB_PASSWORD}
