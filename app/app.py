@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template
 from flask_login import LoginManager
 import mongoengine
@@ -24,7 +25,7 @@ app.secret_key = secrets.token_urlsafe(16)
 
 
 # Connect to the database
-mongoengine.connect('bpa_db', host='127.0.0.1', port=27017)
+mongoengine.connect('bpa_db', host='127.0.0.1', port=27017, username='jmhorcas', password='basket', authentication_source='admin')
 
 
 # Configure login
@@ -70,4 +71,6 @@ if __name__ == "__main__":
       user = User(email='horcas@uma.es')
       user.set_password('basket')
       user.save()
-    app.run(debug=True)
+    ENVIRONMENT_DEBUG = os.environ.get("APP_DEBUG", True)
+    ENVIRONMENT_PORT = os.environ.get("APP_PORT", 5000)
+    app.run(host='0.0.0.0', port=ENVIRONMENT_PORT, debug=ENVIRONMENT_DEBUG)
