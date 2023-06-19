@@ -8,6 +8,10 @@ ENV GROUP_ID=1000 \
 WORKDIR /var/www/
 
 ADD . /var/www/
+ENV VIRTUAL_ENV=/opt/env
+RUN python -m venv $VIRTUAL_ENV
+ENV PATH="$VIRUTAL_ENV/bin:$PATH"
+
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
