@@ -28,31 +28,49 @@
     <div class="row gy-1">
         <div class="col-sm-6">
             <label for="title" class="form-label">Title</label>
-            <textarea type="text" class="form-control" name="title" id="title" rows="3">{% if data and data.title %}{{data.title}}{% endif %}</textarea>
+            <textarea type="text" class="form-control" name="title" id="title" rows="3" required>{% if data and data.title %}{{data.title}}{% endif %}</textarea>
+            <div class="invalid-feedback">
+                The title of the paper is required.
+            </div>
         </div>
     </div>
     <div class="row gy-1">
         <div class="col-sm-2">
             <label for="authors" class="form-label">Authors</label>
-            <textarea type="text" class="form-control" name="authors" id="authors" rows="3">{% if data and data.authors %}{{data.authors | join(', ')}}{% endif %}</textarea>
+            <textarea type="text" class="form-control" name="authors" id="authors" rows="3" required>{% if data and data.authors %}{{data.authors | join(', ')}}{% endif %}</textarea>
+            <div class="invalid-feedback">
+                Authors are required.
+            </div>
         </div>
         <div class="col-sm-2">
             <label for="affiliations" class="form-label">Affiliations</label>
             <textarea type="text" class="form-control" name="affiliations" id="affiliations" rows="3">{% if data and data.affiliations %}{{data.affiliations | join(', ')}}{% endif %}</textarea>
+            <div class="invalid-feedback">
+                Authors' affiliations are required.
+            </div>
         </div>
         <div class="col-sm-2">
             <label for="countries" class="form-label">Countries</label>
             <textarea type="text" class="form-control" name="countries" id="countries" rows="3">{% if data and data.countries %}{{data.countries | map(attribute='name') | join(', ')}}{% endif %}</textarea>
+            <div class="invalid-feedback">
+                Affiliations' countries are required.
+            </div>
         </div>
     </div>
     <div class="row gy-1">
         <div class="col-sm-5">
             <label for="venue" class="form-label">Venue</label>
             <input type="text" class="form-control" name="venue" id="venue" {% if data and data.venue %}value="{{data.venue}}"{% endif %}>
+            <div class="invalid-feedback">
+                The venue (conference) is required.
+            </div>
         </div>
         <div class="col-sm-1">
             <label for="year" class="form-label">Year</label>
             <input type="number" class="form-control" name="year" id="year" {% if data and data.year %}value="{{data.year}}"{% endif %}>
+            <div class="invalid-feedback">
+                The publication year is required.
+            </div>
         </div>
     </div>
     <div class="row gy-1">

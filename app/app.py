@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager
 import mongoengine
 import secrets
@@ -15,15 +15,13 @@ from blueprints.admin import admin_bp
 from blueprints.auth.models import User
 
 
-UPLOAD_FOLDER = 'uploads/certificates'
-
-
 # Create the App
 app = Flask(__name__,
             template_folder='templates',
             static_folder='static',
             static_url_path='/static')
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = os.environ.get('UPLOAD_FOLDER')
+app.config['MAX_CONTENT_LENGTH'] = int(os.environ.get('MAX_FILE_SIZE_MB')) * 1000 * 1000
 app.secret_key = secrets.token_urlsafe(16)
 
 
@@ -54,7 +52,13 @@ app.register_error_handler(404, page_not_found)
 # About page
 @app.route('/about')
 def about():
-    return render_template('about.html')
+   return render_template('about.html')
+
+@app.errorhandler(413)
+def request_entity_too_large(error):
+  doi = request.form['doi']
+  flash("File too big.", category='error')
+  return redirect(url_for('admin.edit_paper'), doi=doi)
 
 
 # Help page

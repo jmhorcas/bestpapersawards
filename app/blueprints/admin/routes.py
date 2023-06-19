@@ -2,6 +2,7 @@ import os
 from flask import render_template, send_from_directory, current_app, request, redirect, url_for, flash
 from flask_login import login_required
 from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
 from . import admin_bp
 from blueprints.add_paper.routes import ALLOWED_EXTENSIONS, allowed_file, extract_paper_from_request
 from models import Paper, Country
@@ -45,7 +46,14 @@ def update_paper():
     config['download_certificate'] = True
 
     if request.method == 'POST':
-        paper = extract_paper_from_request(request)
+        try:
+            paper = extract_paper_from_request(request)
+        except RequestEntityTooLarge as e:
+            flash("Error to big.", category='error')
+            doi = request.form['doi']
+            paper = Paper.objects(doi=doi).first()
+            return render_template('admin/edit_paper.html', data=paper, config=config)
+        
         original_paper = Paper.objects(doi=paper.doi).first()
         paper.certificate = original_paper.certificate
 
