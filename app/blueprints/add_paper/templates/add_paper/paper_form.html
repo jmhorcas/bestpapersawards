@@ -28,7 +28,7 @@
     <div class="row gy-1">
         <div class="col-sm-6">
             <label for="title" class="form-label">Title</label>
-            <textarea type="text" class="form-control" name="title" id="title" rows="3" required>{% if data and data.title %}{{data.title}}{% endif %}</textarea>
+            <textarea type="text" class="form-control" name="title" id="title" rows="3">{% if data and data.title %}{{data.title}}{% endif %}</textarea>
             <div class="invalid-feedback">
                 The title of the paper is required.
             </div>
@@ -37,7 +37,7 @@
     <div class="row gy-1">
         <div class="col-sm-2">
             <label for="authors" class="form-label">Authors</label>
-            <textarea type="text" class="form-control" name="authors" id="authors" rows="3" required>{% if data and data.authors %}{{data.authors | join(', ')}}{% endif %}</textarea>
+            <textarea type="text" class="form-control" name="authors" id="authors" rows="3">{% if data and data.authors %}{{data.authors | join(', ')}}{% endif %}</textarea>
             <div class="invalid-feedback">
                 Authors are required.
             </div>

@@ -2,6 +2,7 @@ import os
 from flask import render_template, request, redirect, url_for, current_app, flash
 from flask_login import current_user
 from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
 from . import add_paper_bp
 from models import Paper, Country
 
@@ -26,6 +27,10 @@ def add_paper():
 
     if request.method == 'POST':
         paper = extract_paper_from_request(request)
+        # Paper is None because the certificate file exceedes the size limit.
+        if paper is None:
+            return redirect(request.referrer)
+        
         # Check if the paper already exists
         if Paper.objects(doi=paper.doi):
             flash(f"There exists a best paper award assigned to this DOI/URL.", category='error')
@@ -33,9 +38,11 @@ def add_paper():
 
         # Extract paper action
         if 'extract' in request.form:
+            print(f'extracint info...............................')
             paper_info = extract_paper_info(paper.doi)
             if paper_info is None:
-                flash(f"Information couldn't retrieved automatically. Please, fill it out.", category='info')
+                print(f'extracint info fail...............................')
+                flash(f"Information couldn't retrieved automatically. Please, fill it out.", category='warning')
             else:
                 if paper_info.title: paper.title = paper_info.title
                 if paper_info.venue: paper.venue = paper_info.venue
@@ -68,7 +75,11 @@ def add_paper():
 
 
 def extract_paper_from_request(request) -> Paper:
-    doi = request.form['doi']
+    try:
+        doi = request.form['doi']
+    except RequestEntityTooLarge:
+        flash(f'Certificate file exceded the size limit ({int(current_app.config["MAX_CONTENT_LENGTH"])/1e6} MB).', category='error')
+        return None
     title = request.form['title']
     year = request.form['year']
     venue = request.form['venue']

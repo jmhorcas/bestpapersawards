@@ -45,20 +45,20 @@ app.register_blueprint(admin_bp, url_prefix='/admin')
 
 # Error pages
 def page_not_found(e):
-  return render_template('404.html'), 404
+    return render_template('404.html'), 404
 app.register_error_handler(404, page_not_found)
 
 
 # About page
 @app.route('/about')
 def about():
-   return render_template('about.html')
+    return render_template('about.html')
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
-  doi = request.form['doi']
-  flash("File too big.", category='error')
-  return redirect(url_for('admin.edit_paper'), doi=doi)
+    doi = request.form['doi']
+    flash("File too big.", category='error')
+    return redirect(url_for('admin.edit_paper'), doi=doi)
 
 
 # Help page
@@ -79,9 +79,9 @@ if __name__ == "__main__":
     ENVIRONMENT_ADMIN_PASS = os.environ.get("ADMIN_PASS")
     # Launch the app
     if not User.objects(email=ENVIRONMENT_ADMIN_USER_EMAIL):
-      user = User(email=ENVIRONMENT_ADMIN_USER_EMAIL)
-      user.set_password(ENVIRONMENT_ADMIN_PASS)
-      user.save()
+        user = User(email=ENVIRONMENT_ADMIN_USER_EMAIL)
+        user.set_password(ENVIRONMENT_ADMIN_PASS)
+        user.save()
 
     ENVIRONMENT_DEBUG = os.environ.get("APP_DEBUG", True)
     ENVIRONMENT_PORT = os.environ.get("APP_PORT", 5000)
