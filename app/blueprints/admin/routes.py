@@ -1,4 +1,6 @@
 import os
+import io
+import csv
 from flask import render_template, send_from_directory, current_app, request, redirect, url_for, flash
 from flask_login import login_required
 from werkzeug.utils import secure_filename
@@ -94,3 +96,47 @@ def delete_paper(doi):
         os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], paper.certificate))
     paper.delete()
     return redirect(url_for('admin.index'))
+
+
+@admin_bp.route('/import/', methods=['GET', 'POST'])
+@login_required
+def import_data():
+    if request.method == 'POST':
+        csv_file = request.files['data_file']
+        filename = csv_file.filename
+        if '.' in filename and filename.rsplit('.', 1)[1].lower() == 'csv':
+            # data = csv_file.read()
+            stream = io.StringIO(csv_file.stream.read().decode("UTF8"), newline=None)
+            content_data = csv.DictReader(stream)
+            # next(content_data, None)  # skip the headers
+            for row in content_data:
+                paper = Paper(doi=row['DOI'])
+                if not Paper.objects(doi=paper.doi):
+                    paper.title = row.get('Title', None)
+                    paper.year = row.get('Year', None)
+                    paper.venue = row.get('Venue', None)
+                    paper.award = row.get('Award', None)
+                    paper.extended_doi = row.get('Ext.', None)
+                    paper.verified = True if row.get('Verified', False) == 'True' else False
+                    authors = row.get('Authors', [])
+                    authors = [a.strip() for a in authors.split(',')] if authors else []
+                    paper.authors = authors
+                    affiliations = row.get('Affiliations', [])
+                    affiliations = [a.strip() for a in affiliations.split(',')] if affiliations else []
+                    paper.affiliations = affiliations
+                    countries = []
+                    countries_names = row.get('Countries', [])
+                    for country in countries_names:
+                        country_code = get_country_code(country)
+                        country_code = None if country_code is None else country_code.lower()
+                        c = Country(name=country, code=country_code)
+                        countries.append(c)
+                        if not Country.objects(name=c.name):
+                            c.save()
+                    paper.countries = countries
+                    paper.save()
+            flash(f'Data imported successfully.', category='info')
+        else:
+            flash(f'Invalid file. It must be a .csv file.', category='error')
+            return render_template('admin/import_data.html')
+    return render_template('admin/import_data.html')

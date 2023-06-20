@@ -98,7 +98,7 @@ def extract_paper_from_request(request) -> Paper:
     countries = []
     for country in countries_names:
         country_code = get_country_code(country)
-        country_code = '--' if country_code is None else country_code.lower()
+        country_code = None if country_code is None else country_code.lower()
         c = Country(name=country, code=country_code)
         countries.append(c)
     # Create paper

@@ -9,17 +9,17 @@
 {% endblock %}
 
 {% block table_content %}
-                {% for paper in data %}
-                <tr>
-                    <td>{{loop.index}}</td>
-                    {% with paper=paper %}
-                        {% include 'table/table_rows.html' %}
-                    {% endwith %}
-                    <td><a href="{{ url_for('admin.edit_paper', doi=paper.doi) }}" title="Edit paper information"><i class="fa-solid fa-pencil" style="color: orange;"></i></a></td>
-                    <td><a href="{{ url_for('admin.delete_paper', doi=paper.doi) }}" title="Delete paper"><i class="fa-solid fa-trash-can" style="color: red;"></i></a></td>
-                </tr>
-                {% endfor %}
-            {% endblock %}
+    {% for paper in data %}
+    <tr>
+        <td>{{loop.index}}</td>
+        {% with paper=paper %}
+            {% include 'table/table_rows.html' %}
+        {% endwith %}
+        <td><a href="{{ url_for('admin.edit_paper', doi=paper.doi) }}" title="Edit paper information"><i class="fa-solid fa-pencil" style="color: orange;"></i></a></td>
+        <td><a href="{{ url_for('admin.delete_paper', doi=paper.doi) }}" title="Delete paper"><i class="fa-solid fa-trash-can" style="color: red;"></i></a></td>
+    </tr>
+    {% endfor %}
+{% endblock %}
 
 {% block table_footer %}
     <tr>

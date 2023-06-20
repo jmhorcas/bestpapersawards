@@ -37,6 +37,9 @@
                     <a class="nav-link {{ 'active' if request.path == url_for('auth.show_signup_form') }}" {% if request.path == url_for('auth.show_signup_form') %} aria-current="page" {% endif %} href="{{ url_for('auth.show_signup_form') }}">Add admin</a>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link {{ 'active' if request.path == url_for('admin.import_data') }}" {% if request.path == url_for('admin.import_data') %} aria-current="page" {% endif %} href="{{ url_for('admin.import_data') }}">Import data</a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link {{ 'active' if request.path == url_for('auth.logout') }}" {% if request.path == url_for('auth.logout') %} aria-current="page" {% endif %} href="{{ url_for('auth.logout') }}">Logout</a>
                   </li>  
                 </ul>
