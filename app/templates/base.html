@@ -17,65 +17,7 @@
 </head>
 {% include 'google_analytics.html' %}
 <body>
-    <!-- Navigation bar -->
-    <nav class="navbar navbar-expand-md bg-dark mb-4 py-0" data-bs-theme="dark">
-        <div class="container-fluid">
-          {% if current_user.is_anonymous %}
-            <a class="navbar-brand" href="{{ url_for('table.index') }}"><i class="fa-solid fa-trophy" style="color: goldenrod;"></i>Best Papers Awards<i class="fa-solid fa-trophy" style="color: goldenrod;"></i></a>
-          {% else %}
-            <a class="navbar-brand" href="{{ url_for('admin.index') }}"><i class="fa-solid fa-trophy" style="color: goldenrod;"></i>Best Papers Awards<i class="fa-solid fa-trophy" style="color: goldenrod;"></i></a>
-          {% endif %}
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              {% if current_user.is_anonymous %}
-              <li class="nav-item">
-                <a class="nav-link {{ 'active' if request.path == url_for('table.index') }}" {% if request.path == url_for('table.index') %} aria-current="page" {% endif %} href="{{ url_for('table.index') }}">Home</a>
-              </li>
-              {% else %}
-              <li class="nav-item">
-                <a class="nav-link {{ 'active' if request.path == url_for('admin.index') }}" {% if request.path == url_for('admin.index') %} aria-current="page" {% endif %} href="{{ url_for('admin.index') }}">Home</a>
-              </li>
-              {% endif %}
-              <li class="nav-item">
-                <a class="nav-link {{ 'active' if request.path == url_for('add_paper.add_paper') }}" {% if request.path == url_for('add_paper.add_paper') %} aria-current="page" {% endif %} href="{{ url_for('add_paper.add_paper') }}">Add paper</a>
-              </li>
-              {% if current_user.is_anonymous %}
-                <li class="nav-item">
-                    <a class="nav-link {{ 'active' if request.path == url_for('auth.login') }}" {% if request.path == url_for('auth.login') %} aria-current="page" {% endif %} href="{{ url_for('auth.login') }}">Admin</a>
-                </li>
-              {% else %}
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ current_user.email }}
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li class="nav-item">
-                    <a class="nav-link {{ 'active' if request.path == url_for('auth.show_signup_form') }}" {% if request.path == url_for('auth.show_signup_form') %} aria-current="page" {% endif %} href="{{ url_for('auth.show_signup_form') }}">Add admin</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link {{ 'active' if request.path == url_for('auth.logout') }}" {% if request.path == url_for('auth.logout') %} aria-current="page" {% endif %} href="{{ url_for('auth.logout') }}">Logout</a>
-                  </li>  
-                </ul>
-              </li>
-              {% endif %}
-
-              <li class="nav-item">
-                <a class="nav-link {{ 'active' if request.path == url_for('about') }}" {% if request.path == url_for('about') %} aria-current="page" {% endif %} href="{{ url_for('about') }}">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link {{ 'active' if request.path == url_for('help') }}" {% if request.path == url_for('help') %} aria-current="page" {% endif %} href="{{ url_for('help') }}"><i class="fa-regular fa-circle-question" title="Help"></i></a>
-              </li>
-            </ul>
-          </div>
-          <div class="d-flex">
-            <a href="https://www.buymeacoffee.com/jmhorcas"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&emoji=🍺&slug=jmhorcas&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" style="height: 35px;"/></a>
-          </div>
-        </div>
-      </nav>
-    <!-- End of Navigation bar -->
+    {% include 'navigation_bar.html' %}
 
     {% block main_title %}
     <!-- By me a coffee -->
