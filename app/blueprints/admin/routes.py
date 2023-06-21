@@ -84,7 +84,7 @@ def update_paper():
                     return render_template('admin/edit_paper.html', data=paper, config=config)
             for c in paper.countries:
                 c.save()
-            paper.save()
+            paper.update()
             return redirect(url_for('admin.index'))
    
 
