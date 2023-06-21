@@ -10,7 +10,7 @@ def index():
     return render_template('table/index.html', data=papers)
 
 
-@table_bp.route('/certificate/<path:doi>', methods=['GET'])
-def download_certificate(doi):
-    paper = Paper.objects(doi=doi).first()
-    return send_from_directory(current_app.config["UPLOAD_FOLDER"], paper.certificate, as_attachment=True)
+@table_bp.route('/certificate/<path:certificate>', methods=['GET'])
+def download_certificate(certificate):
+    #paper = Paper.objects(doi=doi).first()
+    return send_from_directory(current_app.config["UPLOAD_FOLDER"], certificate, as_attachment=True)

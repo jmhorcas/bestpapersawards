@@ -74,6 +74,10 @@ def load_user(user_email):
 
 
 if __name__ == "__main__":
+    ENVIRONMENT_DEBUG = os.environ.get("APP_DEBUG", True)
+    ENVIRONMENT_PORT = os.environ.get("APP_PORT", 5000)
+    app.run(host='0.0.0.0', port=ENVIRONMENT_PORT, debug=ENVIRONMENT_DEBUG)
+
     # Create default admin
     ENVIRONMENT_ADMIN_USER_EMAIL = os.environ.get("ADMIN_USER_EMAIL")
     ENVIRONMENT_ADMIN_PASS = os.environ.get("ADMIN_PASS")
@@ -82,7 +86,3 @@ if __name__ == "__main__":
         user = User(email=ENVIRONMENT_ADMIN_USER_EMAIL)
         user.set_password(ENVIRONMENT_ADMIN_PASS)
         user.save()
-
-    ENVIRONMENT_DEBUG = os.environ.get("APP_DEBUG", True)
-    ENVIRONMENT_PORT = os.environ.get("APP_PORT", 5000)
-    app.run(host='0.0.0.0', port=ENVIRONMENT_PORT, debug=ENVIRONMENT_DEBUG)

@@ -7,5 +7,5 @@
 <td>{{paper.affiliations | join (', ')}}</td>
 <td>{% for country in paper.countries %}<i class="flag-icon flag-icon-{{country.code}}" title={{country.name}}><span hidden>{{country.name}}</span></i>{% endfor %}</td>
 <td>{{ paper.award if paper.award }}</td>
-<td>{% if paper.certificate %}<a href="{{ url_for('table.download_certificate', doi=paper.doi) }}" title="Download certificate"><i class="fa-solid fa-award" style="color: goldenrod;"></i></a><span hidden>{{paper.certificate}}</span>{% endif %}</td>
+<td>{% if paper.certificate %}<a href="{{ url_for('table.download_certificate', certificate=paper.certificate) }}" title="Download certificate"><i class="fa-solid fa-award" style="color: goldenrod;"></i></a><span hidden>{{paper.certificate}}</span>{% endif %}</td>
 <td>{% if paper.verified %}<i class="fa-solid fa-circle-check" style="color: green;" title="This award has been verified."></i><span hidden>True</span>{% else %}<i class="fa-solid fa-circle-minus" style="color: grey;" title="This award is unverified."></i><span hidden>False</span>{% endif %}</td>
