@@ -89,13 +89,13 @@ def extract_paper_from_request(request) -> Paper:
     verified = True if request.form.get('verified', False) == 'on' else False
     # Process authors
     authors = request.form['authors']
-    authors = [a for a in authors.split(',')] if authors else []
+    authors = [a.strip() for a in authors.split(',')] if authors else []
     # Process affiliations
     affiliations = request.form['affiliations']
-    affiliations = [a for a in affiliations.split(',')] if affiliations else []
+    affiliations = [a.strip() for a in affiliations.split(',')] if affiliations else []
     # Process countries
     countries = request.form['countries']
-    countries_names = [c for c in countries.split(',')] if countries else []
+    countries_names = [c.strip() for c in countries.split(',')] if countries else []
     countries = []
     for country in countries_names:
         country_code = get_country_code(country)
