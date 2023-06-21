@@ -1,16 +1,12 @@
 import os
-import io
-import csv
-from flask import render_template, send_from_directory, current_app, request, redirect, url_for, flash
+from flask import render_template, current_app, request, redirect, url_for, flash
 from flask_login import login_required
 from werkzeug.utils import secure_filename
-from werkzeug.urls import url_parse
 from . import admin_bp
 from blueprints.add_paper.routes import ALLOWED_EXTENSIONS, allowed_file, extract_paper_from_request
 from models import Paper, Country
 
 from utils.extract_paper_info import extract_paper_info
-from utils.country_code_map import get_country_code
 
 
 # Define routes and views
@@ -106,60 +102,3 @@ def delete_paper(id):
         os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], paper.certificate))
     paper.delete()
     return redirect(url_for('admin.index'))
-
-
-@admin_bp.route('/import/', methods=['GET', 'POST'])
-@login_required
-def import_data():
-    if request.method == 'POST':
-        csv_file = request.files['data_file']
-        filename = csv_file.filename
-        if '.' in filename and filename.rsplit('.', 1)[1].lower() == 'csv':
-            # data = csv_file.read()
-            stream = io.StringIO(csv_file.stream.read().decode("UTF8"), newline=None)
-            content_data = csv.DictReader(stream)
-            # next(content_data, None)  # skip the headers
-            n_paper_imported = 0
-            n_paper_duplicated = 0
-            n_paper_errors = 0
-            for row in content_data:
-                doi = doi=row['DOI']
-                id = hash(doi)
-                paper = Paper(id=id)
-                if Paper.objects(doi=doi):
-                    n_paper_duplicated += 1
-                else:
-                    try:
-                        paper.doi = doi
-                        paper.title = row.get('Title', None)
-                        paper.year = row.get('Year', None)
-                        paper.venue = row.get('Venue', None)
-                        paper.award = row.get('Award', None)
-                        paper.extended_doi = row.get('Ext.', None)
-                        paper.verified = True if row.get('Verified', False) == 'True' else False
-                        authors = row.get('Authors', [])
-                        authors = [a.strip() for a in authors.split(',')] if authors else []
-                        paper.authors = authors
-                        affiliations = row.get('Affiliations', [])
-                        affiliations = [a.strip() for a in affiliations.split(',')] if affiliations else []
-                        paper.affiliations = affiliations
-                        countries_names = row.get('Countries', [])
-                        countries_names = [c.strip() for c in countries_names.split(',')] if countries_names else []
-                        countries = []
-                        for country in countries_names:
-                            country_code = get_country_code(country)
-                            country_code = None if country_code is None else country_code.lower()
-                            c = Country(name=country, code=country_code)
-                            countries.append(c)
-                            if not Country.objects(name=c.name):
-                                c.save()
-                        paper.countries = countries
-                        paper.save()
-                    except:
-                        n_paper_errors += 1
-                    n_paper_imported += 1
-            flash(f'{n_paper_imported} papers were correctly imported. {n_paper_duplicated + n_paper_errors} papers not imported ({n_paper_duplicated} duplicated, {n_paper_errors} errors).', category='info')
-        else:
-            flash(f'Invalid file. It must be a .csv file.', category='error')
-            return render_template('admin/import_data.html')
-    return render_template('admin/import_data.html')

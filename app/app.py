@@ -10,6 +10,7 @@ from blueprints.table import table_bp
 from blueprints.add_paper import add_paper_bp
 from blueprints.auth import auth_bp
 from blueprints.admin import admin_bp
+from blueprints.import_papers import import_bp
 
 from blueprints.auth.models import User
 
@@ -43,6 +44,7 @@ app.register_blueprint(table_bp, url_prefix='/')
 app.register_blueprint(add_paper_bp, url_prefix='/add')
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(admin_bp, url_prefix='/admin')
+app.register_blueprint(import_bp, url_prefix='/import')
 
 
 # Error pages
