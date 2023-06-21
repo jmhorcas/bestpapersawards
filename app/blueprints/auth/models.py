@@ -5,7 +5,8 @@ from flask_login import UserMixin
 
 
 class User(UserMixin, Document):
-    email = StringField(primary_key=True, max_length=120)
+    id = IntField(primary_key=True)
+    email = StringField(required=True, unique=True, max_length=120)
     password_hash = StringField(max_length=128)
 
     def __repr__(self):

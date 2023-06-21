@@ -21,9 +21,9 @@ def index():
     return render_template('admin/index.html', data=papers)
 
 
-@admin_bp.route('/edit/<path:doi>/', methods=['GET'])
+@admin_bp.route('/edit/<path:id>/', methods=['GET'])
 @login_required
-def edit_paper(doi):
+def edit_paper(id):
     # Global config variables for the template (to distinguished add_paper and edit_paper)
     config = {}
     config['url_for_action'] = 'admin.update_paper'
@@ -32,7 +32,7 @@ def edit_paper(doi):
     config['readonly_doi'] = True
     config['download_certificate'] = True
 
-    paper = Paper.objects(doi=doi).first()
+    paper = Paper.objects(id=id).first()
     return render_template('admin/edit_paper.html', data=paper, config=config)
     
 
@@ -88,10 +88,10 @@ def update_paper():
             return redirect(url_for('admin.index'))
    
 
-@admin_bp.route('/delete/<path:doi>/', methods=['GET'])
+@admin_bp.route('/delete/<path:id>/', methods=['GET'])
 @login_required
-def delete_paper(doi):
-    paper = Paper.objects(doi=doi).first()
+def delete_paper(id):
+    paper = Paper.objects(id=id).first()
     if paper.certificate:
         os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], paper.certificate))
     paper.delete()
@@ -113,11 +113,14 @@ def import_data():
             n_paper_duplicated = 0
             n_paper_errors = 0
             for row in content_data:
-                paper = Paper(doi=row['DOI'])
-                if Paper.objects(doi=paper.doi):
+                doi = doi=row['DOI']
+                id = hash(doi)
+                paper = Paper(id=id)
+                if Paper.objects(doi=doi):
                     n_paper_duplicated += 1
                 else:
                     try:
+                        paper.doi = doi
                         paper.title = row.get('Title', None)
                         paper.year = row.get('Year', None)
                         paper.venue = row.get('Venue', None)
@@ -133,7 +136,6 @@ def import_data():
                         countries_names = row.get('Countries', [])
                         countries_names = [c.strip() for c in countries_names.split(',')] if countries_names else []
                         countries = []
-                        print(f'Countries: {countries_names}')
                         for country in countries_names:
                             country_code = get_country_code(country)
                             country_code = None if country_code is None else country_code.lower()

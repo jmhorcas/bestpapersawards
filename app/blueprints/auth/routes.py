@@ -30,7 +30,9 @@ def login():
     ENVIRONMENT_ADMIN_PASS = os.environ.get("ADMIN_PASS")
     # Launch the app
     if not User.objects(email=ENVIRONMENT_ADMIN_USER_EMAIL):
-        user = User(email=ENVIRONMENT_ADMIN_USER_EMAIL)
+        id = hash(ENVIRONMENT_ADMIN_USER_EMAIL)
+        user = User(id=id)
+        user.email = ENVIRONMENT_ADMIN_USER_EMAIL
         user.set_password(ENVIRONMENT_ADMIN_PASS)
         user.save()
     return render_template('auth/login.html')
@@ -47,9 +49,9 @@ def show_signup_form():
         if User.objects(email=email):
             flash(f"There exists an admin with this email.", category='error')
             return render_template('auth/register.html')
-        print(f'email: {email}')
-        print(f'password: {password}')
-        user = User(email=email)
+        id = hash(email)
+        user = User(id=id)
+        user.email = email
         user.set_password(password)
         user.save()
         flash(f'New admin successfully registered.', category='info')

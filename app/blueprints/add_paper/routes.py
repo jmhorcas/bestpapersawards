@@ -80,12 +80,13 @@ def extract_paper_from_request(request) -> Paper:
     except RequestEntityTooLarge:
         flash(f'Certificate file exceded the size limit ({int(current_app.config["MAX_CONTENT_LENGTH"])/1e6} MB).', category='error')
         return None
+    id = hash(doi)
     title = request.form['title']
     year = request.form['year']
     venue = request.form['venue']
     award = request.form['award']
     extended_doi = request.form['extended_doi']
-    verified = True if request.form.get('verified', False) == 'True' else False
+    verified = True if request.form.get('verified', False) == 'on' else False
     # Process authors
     authors = request.form['authors']
     authors = [a.strip() for a in authors.split(',')] if authors else []
@@ -102,7 +103,8 @@ def extract_paper_from_request(request) -> Paper:
         c = Country(name=country, code=country_code)
         countries.append(c)
     # Create paper
-    paper = Paper(doi=doi)
+    paper = Paper(id=id)
+    paper.doi = doi
     paper.title = title if title else None
     paper.year = year if year else None
     paper.venue = venue if venue else None

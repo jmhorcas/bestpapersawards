@@ -32,7 +32,9 @@ def extract_paper_info(doi: str) -> Paper:
     info = get_paper_info(doi)  # Extract paper info automatically
     if info is not None:
         title, authors, year, venue = info
-        paper = Paper(doi=doi)
+        id = hash(doi)
+        paper = Paper(id=id)
+        paper.doi = doi
         paper.title = title
         paper.year = year
         paper.venue = venue

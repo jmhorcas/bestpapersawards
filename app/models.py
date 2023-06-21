@@ -2,7 +2,8 @@ from mongoengine import *
 
 
 class Paper(Document):
-    doi = StringField(primary_key=True)
+    id = IntField(primary_key=True)
+    doi = StringField(required=True, unique=True)
     extended_doi = StringField()
     title = StringField()
     year = IntField()
