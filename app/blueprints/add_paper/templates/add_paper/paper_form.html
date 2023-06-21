@@ -88,7 +88,7 @@
                     <label class="form-label" style="visibility:hidden;">Download certificate</label>
                 </div>
                 <div class="row">
-                    <label class="form-label">{% if data and data.certificate %}<a href="{{ url_for('table.download_certificate', doi=data.doi) }}" title="Download certificate"><i class="fa-solid fa-download" style="color: green;"></i></a>{% else %}<i class="fa-solid fa-download" style="color: gray;" title="Not available"></i>{% endif %}</label>
+                    <label class="form-label">{% if data and data.certificate %}<a href="{{ url_for('table.download_certificate', certificate=data.certificate) }}" title="Download certificate"><i class="fa-solid fa-download" style="color: green;"></i></a>{% else %}<i class="fa-solid fa-download" style="color: gray;" title="Not available"></i>{% endif %}</label>
                 </div>
             </div>      
         {% endif %}
