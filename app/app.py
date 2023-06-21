@@ -26,8 +26,10 @@ app.secret_key = secrets.token_urlsafe(16)
 
 
 # Connect to the database
-#mongoengine.connect('bpa_db', host='localhost', port=27017, username='user', password='pass', authentication_source='bpa_db')
-mongoengine.connect('bpa_db', host='127.0.0.1', port=27017)
+user_db = os.environ.get('USER_DB')
+pass_db = os.environ.get('PASS_DB')
+mongoengine.connect('bpa_db', host='localhost', port=27017, username=user_db, password=pass_db, authentication_source='bpa_db')
+#mongoengine.connect('bpa_db', host='127.0.0.1', port=27017)
 
 
 # Configure login
