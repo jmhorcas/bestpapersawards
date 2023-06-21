@@ -83,8 +83,18 @@ def update_paper():
                     flash(f'Invalid file extension for certificate. Please, use one of these: {", ".join(ALLOWED_EXTENSIONS)}', category='error')
                     return render_template('admin/edit_paper.html', data=paper, config=config)
             for c in paper.countries:
-                c.save()
-            paper.update()
+                if not Country.objects(name=c.name):
+                    c.save()
+            original_paper.title = paper.title
+            original_paper.venue = paper.venue
+            original_paper.year = paper.year
+            original_paper.authors = paper.authors
+            original_paper.affiliations = paper.affiliations
+            original_paper.countries = paper.countries
+            original_paper.award = paper.award
+            original_paper.certificate = paper.certificate
+            original_paper.verified = paper.verified
+            original_paper.save()
             return redirect(url_for('admin.index'))
    
 
