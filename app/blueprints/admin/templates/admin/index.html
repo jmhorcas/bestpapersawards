@@ -11,7 +11,6 @@
 {% block table_content %}
     {% for paper in data %}
     <tr>
-        <td>{{loop.index}}</td>
         {% with paper=paper %}
             {% include 'table/table_rows.html' %}
         {% endwith %}
