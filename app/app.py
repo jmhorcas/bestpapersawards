@@ -2,7 +2,6 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager
 import mongoengine
-import secrets
 
 from dotenv import load_dotenv
 load_dotenv('.env')
@@ -22,7 +21,7 @@ app = Flask(__name__,
             static_url_path='/static')
 app.config['UPLOAD_FOLDER'] = os.environ.get('UPLOAD_FOLDER')
 app.config['MAX_CONTENT_LENGTH'] = int(os.environ.get('MAX_FILE_SIZE_MB')) * 1000 * 1000
-app.secret_key = secrets.token_urlsafe(16)
+app.secret_key = os.environ.get('SECRET_KEY')
 
 
 # Connect to the database
@@ -33,7 +32,8 @@ mongoengine.connect('bpa_db', host='localhost', port=27017, username=user_db, pa
 
 
 # Configure login
-login_manager = LoginManager(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 login_manager.login_view = "auth.login"
 
 
@@ -71,8 +71,8 @@ def help():
 
 # Login
 @login_manager.user_loader
-def load_user(userid):
-    return User.objects(id=userid).first()
+def load_user(user_id):
+    return User.get(user_id)
 
 
 if __name__ == "__main__":
