@@ -85,7 +85,7 @@ def extract_paper_from_request(request) -> Paper:
     venue = request.form['venue']
     award = request.form['award']
     extended_doi = request.form['extended_doi']
-    verified = bool(request.form.get('verified', False))
+    verified = True if request.form.get('verified', False) == 'True' else False
     # Process authors
     authors = request.form['authors']
     authors = [a.strip() for a in authors.split(',')] if authors else []
