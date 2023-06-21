@@ -14,7 +14,7 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        remember_me = True if request.form.get('rememberme', False) == 'True' else False
+        remember_me = True if request.form.get('rememberme', False) == 'on' else False
 
         user = get_user(email)
         if user is not None and user.check_password(password):

@@ -26,7 +26,7 @@ app.secret_key = secrets.token_urlsafe(16)
 
 
 # Connect to the database
-#mongoengine.connect('bpa_db', host='127.0.0.1', port=27017, username='user', password='pass', authentication_source='bpa_db')
+#mongoengine.connect('bpa_db', host='localhost', port=27017, username='user', password='pass', authentication_source='bpa_db')
 mongoengine.connect('bpa_db', host='127.0.0.1', port=27017)
 
 
@@ -69,8 +69,8 @@ def help():
 
 # Login
 @login_manager.user_loader
-def load_user(user_id):
-    return User.objects(id=user_id).first()
+def load_user(userid):
+    return User.objects(id=userid).first()
 
 
 if __name__ == "__main__":
