@@ -13,6 +13,10 @@ def get_country_code(country_name: str) -> str:
         country = pycountry.countries.get(name=country_name)
         if country is not None:
             return country.alpha_2
+        else:
+            country = pycountry.countries.lookup(country_name)
+            if country is not None:
+                return country.alpha_2
     except KeyError:
         return None
     return None
