@@ -72,7 +72,7 @@ def help():
 # Login
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return User.objects(id=user_id).first()
 
 
 if __name__ == "__main__":
