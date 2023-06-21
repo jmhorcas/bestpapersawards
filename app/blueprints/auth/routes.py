@@ -1,3 +1,4 @@
+import os
 from flask import render_template, request, redirect, url_for, current_app, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -24,6 +25,14 @@ def login():
             return redirect(next_page)
         else:
             flash(f'Invalid email or password.', category='error')
+    # Create default admin
+    ENVIRONMENT_ADMIN_USER_EMAIL = os.environ.get("ADMIN_USER_EMAIL")
+    ENVIRONMENT_ADMIN_PASS = os.environ.get("ADMIN_PASS")
+    # Launch the app
+    if not User.objects(email=ENVIRONMENT_ADMIN_USER_EMAIL):
+        user = User(email=ENVIRONMENT_ADMIN_USER_EMAIL)
+        user.set_password(ENVIRONMENT_ADMIN_PASS)
+        user.save()
     return render_template('auth/login.html')
 
 

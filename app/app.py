@@ -26,7 +26,7 @@ app.secret_key = secrets.token_urlsafe(16)
 
 
 # Connect to the database
-#mongoengine.connect('bpa_db', host='127.0.0.1', port=27017, username='jmhorcas', password='basket', authentication_source='admin')
+#mongoengine.connect('bpa_db', host='127.0.0.1', port=27017, username='user', password='pass', authentication_source='bpa_db')
 mongoengine.connect('bpa_db', host='127.0.0.1', port=27017)
 
 
@@ -77,12 +77,3 @@ if __name__ == "__main__":
     ENVIRONMENT_DEBUG = os.environ.get("APP_DEBUG", True)
     ENVIRONMENT_PORT = os.environ.get("APP_PORT", 5000)
     app.run(host='0.0.0.0', port=ENVIRONMENT_PORT, debug=ENVIRONMENT_DEBUG)
-
-    # Create default admin
-    ENVIRONMENT_ADMIN_USER_EMAIL = os.environ.get("ADMIN_USER_EMAIL")
-    ENVIRONMENT_ADMIN_PASS = os.environ.get("ADMIN_PASS")
-    # Launch the app
-    if not User.objects(email=ENVIRONMENT_ADMIN_USER_EMAIL):
-        user = User(email=ENVIRONMENT_ADMIN_USER_EMAIL)
-        user.set_password(ENVIRONMENT_ADMIN_PASS)
-        user.save()
