@@ -16,15 +16,11 @@ var table = $(document).ready( function () {
         },
         columnDefs: [
             {
-                targets: [2, 3, 4, 8],
+                targets: [1, 2, 3, 7],
                 className: 'dt-center'
             },
             {
-                targets: [0],
-                className: 'dt-right'
-            },
-            {
-                targets: [3],
+                targets: [2],
                 orderable: false
             }
           ],
