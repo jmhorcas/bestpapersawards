@@ -96,7 +96,7 @@
     {% if current_user.is_anonymous %} 
     <div class="row gy-1">
         <div class="col-sm-6">
-            <div class="g-recaptcha" data-sitekey="{{ config.pub_key }}" style="text-align: center; display: inline-block;"></div>
+            <div class="g-recaptcha" data-sitekey="{{ config.pub_key }}" style="text-align: center; display: inline-block;" required></div>
         </div>
     </div>
     {% endif %}
