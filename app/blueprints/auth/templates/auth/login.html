@@ -6,6 +6,10 @@
 {% block main_title %}
 {% endblock %}
 
+{% block head_scripts %} 
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+{% endblock %}
+
 
 {% block content %}
 <div class="container-flex">
@@ -38,6 +42,13 @@
                     <label class="form-check-label" for="rememberme">Remember me</label>
                 </div>
             </div>
+            {% if current_user.is_anonymous %} 
+            <div class="row g-3 d-flex justify-content-center">
+                <div class="col-sm-4">
+                    <div class="g-recaptcha" data-sitekey="{{ config.pub_key }}" style="text-align: center; display: inline-block;" required></div>
+                </div>
+            </div>
+            {% endif %}
             <div class="row g-3 d-flex justify-content-center">
                 <div class="col-sm-4">
                     <button type="submit" class="btn btn-primary">Login</button>
