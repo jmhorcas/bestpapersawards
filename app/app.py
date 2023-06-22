@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager
+from flask_recaptcha import ReCaptcha
 import mongoengine
 
 from dotenv import load_dotenv
@@ -36,6 +37,11 @@ mongoengine.connect('bpa_db', host='localhost', port=27017, username=user_db, pa
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "auth.login"
+
+
+# Configura re-captcha
+app.config['RECAPTCHA_SITE_KEY'] = os.environ.get('RECAPTCHA_SITE_KEY')
+app.config['RECAPTCHA_SECRET_KEY'] = os.environ.get('RECAPTCHA_SECRET_KEY')
 
 
 # Register blueprints

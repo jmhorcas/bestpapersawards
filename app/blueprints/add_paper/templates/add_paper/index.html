@@ -3,6 +3,11 @@
 {% block main_title %}
 {% endblock %}
 
+{% block head_scripts %} 
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+{% endblock %}
+
+
 {% block content %}
     <h2>Add new best paper award</h2>
     {% include 'add_paper/paper_form.html' %}
