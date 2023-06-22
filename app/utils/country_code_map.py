@@ -17,6 +17,6 @@ def get_country_code(country_name: str) -> str:
             country = pycountry.countries.lookup(country_name)
             if country is not None:
                 return country.alpha_2
-    except KeyError:
+    except (KeyError, LookupError):
         return None
     return None
