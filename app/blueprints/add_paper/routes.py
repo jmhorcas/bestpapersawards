@@ -27,56 +27,56 @@ def add_paper():
     config['pub_key'] = current_app.config['RECAPTCHA_SITE_KEY']
 
     if request.method == 'POST':
-        captcha_response = request.form['g-recaptcha-response']
-        if not is_human(captcha_response):
-            flash(f'Invalid captcha.', category='error')
-            return redirect(request.referrer)
-        else:
-            paper = extract_paper_from_request(request)
-            # Paper is None because the certificate file exceedes the size limit.
-            if paper is None:
+        if not current_user.is_authenticated:
+            captcha_response = request.form['g-recaptcha-response']
+            if not is_human(captcha_response):
+                flash(f'Invalid captcha.', category='error')
                 return redirect(request.referrer)
-            
-            # Check if the paper already exists
-            if Paper.objects(doi=paper.doi):
-                flash(f"There exists a best paper award assigned to this DOI/URL.", category='error')
-                return render_template('add_paper/index.html', data=paper, config=config)
+        paper = extract_paper_from_request(request)
+        # Paper is None because the certificate file exceedes the size limit.
+        if paper is None:
+            return redirect(request.referrer)
+        
+        # Check if the paper already exists
+        if Paper.objects(doi=paper.doi):
+            flash(f"There exists a best paper award assigned to this DOI/URL.", category='error')
+            return render_template('add_paper/index.html', data=paper, config=config)
 
-            # Extract paper action
-            if 'extract' in request.form:
-                print(f'extracint info...............................')
-                paper_info = extract_paper_info(paper.doi)
-                if paper_info is None:
-                    print(f'extracint info fail...............................')
-                    flash(f"Information couldn't retrieved automatically. Please, fill it out.", category='warning')
+        # Extract paper action
+        if 'extract' in request.form:
+            print(f'extracint info...............................')
+            paper_info = extract_paper_info(paper.doi)
+            if paper_info is None:
+                print(f'extracint info fail...............................')
+                flash(f"Information couldn't retrieved automatically. Please, fill it out.", category='warning')
+            else:
+                if paper_info.title: paper.title = paper_info.title
+                if paper_info.venue: paper.venue = paper_info.venue
+                if paper_info.year: paper.year = paper_info.year
+                if paper_info.authors: paper.authors = paper_info.authors
+                if paper_info.affiliations: paper.affiliations = paper_info.affiliations
+                if paper_info.countries: paper.countries = paper_info.countries
+            return render_template('add_paper/index.html', data=paper, config=config)
+        
+        # Add paper action
+        elif 'add' in request.form:
+            certificate_file = request.files['certificate']
+            filename = None
+            if certificate_file:
+                if allowed_file(certificate_file.filename):
+                    filename = secure_filename(certificate_file.filename)
+                    certificate_file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
                 else:
-                    if paper_info.title: paper.title = paper_info.title
-                    if paper_info.venue: paper.venue = paper_info.venue
-                    if paper_info.year: paper.year = paper_info.year
-                    if paper_info.authors: paper.authors = paper_info.authors
-                    if paper_info.affiliations: paper.affiliations = paper_info.affiliations
-                    if paper_info.countries: paper.countries = paper_info.countries
-                return render_template('add_paper/index.html', data=paper, config=config)
-            
-            # Add paper action
-            elif 'add' in request.form:
-                certificate_file = request.files['certificate']
-                filename = None
-                if certificate_file:
-                    if allowed_file(certificate_file.filename):
-                        filename = secure_filename(certificate_file.filename)
-                        certificate_file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-                    else:
-                        flash(f'Invalid file extension for certificate. Please, use one of these: {", ".join(ALLOWED_EXTENSIONS)}', category='error')
-                        return render_template('add_paper/index.html', data=paper, config=config)
-                paper.certificate = filename
-                for c in paper.countries:
-                    c.save()
-                paper.save()
-                if current_user.is_authenticated:
-                    return redirect(url_for('admin.index'))    
-                else:
-                    return redirect(url_for('table.index'))
+                    flash(f'Invalid file extension for certificate. Please, use one of these: {", ".join(ALLOWED_EXTENSIONS)}', category='error')
+                    return render_template('add_paper/index.html', data=paper, config=config)
+            paper.certificate = filename
+            for c in paper.countries:
+                c.save()
+            paper.save()
+            if current_user.is_authenticated:
+                return redirect(url_for('admin.index'))    
+            else:
+                return redirect(url_for('table.index'))
     return render_template('add_paper/index.html', config=config) 
 
 
