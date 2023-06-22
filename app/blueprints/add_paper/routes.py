@@ -30,7 +30,7 @@ def add_paper():
         captcha_response = request.form['g-recaptcha-response']
         if not is_human(captcha_response):
             flash(f'Invalid captcha.', category='error')
-            return render_template(request.referrer)
+            return redirect(request.referrer)
         else:
             paper = extract_paper_from_request(request)
             # Paper is None because the certificate file exceedes the size limit.
