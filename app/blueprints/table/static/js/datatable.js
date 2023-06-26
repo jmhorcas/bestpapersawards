@@ -10,6 +10,7 @@ var table = $(document).ready( function () {
         //dom: '<"search"f><"search_info"i>rt<"bottom"lp><"clear">',
         //sDom: 'z<"row-fluid"<"span4"C><"span4 lineitemcheckbox"><"span3"l>r><"row-fluid"<"span4 actiondropdown"><"span4"f><"span4 advsearch">><"row-fluid"<"span12 newrecordbutton">><"datatable-scroll"t><"row-fluid"<"span12"i><"span12 center"p>>',
         //sAlign: "left",
+        order: [[1, 'desc']],
         language: {
             searchPlaceholder: "",
             search: "🔍",
