@@ -82,6 +82,7 @@ def update_paper():
                 if not Country.objects(name=c.name):
                     c.save()
             original_paper.title = paper.title
+            original_paper.extended_doi = paper.extended_doi
             original_paper.venue = paper.venue
             original_paper.year = paper.year
             original_paper.authors = paper.authors
